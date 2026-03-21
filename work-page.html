@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>働く | タイヤマネージャー フー</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --navy: #0d1f3c; --navy-mid: #1a3560; --orange: #e8600a;
+  --orange-light: #f5a05a; --cream: #f5f0e8; --gray-text: #4a4a4a;
+  --gray-light: #e8e4dc; --white: #ffffff;
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'Noto Sans JP', sans-serif; background: var(--cream); color: var(--navy); overflow-x: hidden; }
+
+/* NAV */
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 18px 40px; background: rgba(13,31,60,0.97); }
+.nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--white); letter-spacing: 0.08em; }
+.nav-logo span { color: var(--orange); }
+.nav-links { display: flex; gap: 32px; list-style: none; }
+.nav-links a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 13px; letter-spacing: 0.05em; transition: color 0.2s; }
+.nav-links a:hover { color: var(--orange-light); }
+
+/* HERO */
+.hero { min-height: 100vh; background: var(--navy); display: flex; align-items: center; position: relative; overflow: hidden; padding: 120px 40px 80px; }
+.hero-accent { position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: var(--orange); }
+.hero-bg { position: absolute; right: -20px; bottom: -60px; font-family: 'Bebas Neue', sans-serif; font-size: clamp(140px,22vw,320px); color: rgba(255,255,255,0.03); line-height: 1; pointer-events: none; user-select: none; }
+.hero-inner { max-width: 760px; padding-left: 50px; position: relative; z-index: 1; }
+.hero-eyebrow { font-size: 12px; font-weight: 500; letter-spacing: 0.25em; color: var(--orange); text-transform: uppercase; margin-bottom: 28px; display: flex; align-items: center; gap: 12px; }
+.hero-eyebrow::before { content: ''; width: 32px; height: 1px; background: var(--orange); }
+.hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(52px,8vw,100px); color: var(--white); line-height: 1; letter-spacing: 0.02em; margin-bottom: 12px; }
+.hero-title .hl { color: var(--orange); }
+.hero-sub { font-size: clamp(15px,2.2vw,20px); color: rgba(255,255,255,0.6); font-weight: 300; line-height: 1.9; margin-bottom: 48px; max-width: 520px; }
+.hero-cta { display: inline-flex; align-items: center; gap: 12px; padding: 16px 36px; background: var(--orange); color: var(--white); text-decoration: none; font-size: 15px; font-weight: 500; letter-spacing: 0.08em; transition: background 0.2s, transform 0.2s; }
+.hero-cta:hover { background: #c94e00; transform: translateX(4px); }
+.hero-cta::after { content: '→'; font-size: 18px; }
+
+/* SECTION BASE */
+.sec { padding: 100px 40px; }
+.container { max-width: 1000px; margin: 0 auto; }
+.sec-label { font-size: 11px; font-weight: 500; letter-spacing: 0.3em; color: var(--orange); text-transform: uppercase; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+.sec-label::before { content: ''; width: 24px; height: 1px; background: var(--orange); }
+.sec-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(36px,6vw,64px); line-height: 1.05; letter-spacing: 0.02em; margin-bottom: 24px; }
+.sec-body { font-size: 16px; line-height: 2.0; color: var(--gray-text); max-width: 600px; }
+
+/* =============================================
+   スライドインセクション
+============================================= */
+.features { background: var(--navy); overflow: hidden; }
+
+.feat {
+  display: flex;
+  align-items: stretch;
+  min-height: 460px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  /* 初期状態 */
+  opacity: 0;
+}
+.feat.in-view {
+  opacity: 1;
+}
+
+/* 画像ブロック（通常：左から） */
+.feat-img {
+  width: 50%;
+  flex-shrink: 0;
+  overflow: hidden;
+  transform: translateX(-220px) scale(0.92);
+  transition: transform 1.3s cubic-bezier(0.16,1,0.3,1), opacity 1.0s ease;
+  opacity: 0;
+}
+.feat.in-view .feat-img {
+  transform: translateX(0) scale(1);
+  opacity: 1;
+}
+
+/* テキストブロック（通常：右から） */
+.feat-text {
+  flex: 1;
+  padding: 64px 68px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transform: translateX(160px) translateY(30px);
+  transition: transform 1.3s cubic-bezier(0.16,1,0.3,1) 0.25s, opacity 1.0s ease 0.25s;
+  opacity: 0;
+}
+.feat.in-view .feat-text {
+  transform: translateX(0) translateY(0);
+  opacity: 1;
+}
+
+/* reverse行：画像が右、テキストが左 */
+.feat.rev .feat-img {
+  order: 2;
+  transform: translateX(220px) scale(0.92);
+}
+.feat.rev.in-view .feat-img {
+  transform: translateX(0) scale(1);
+  opacity: 1;
+}
+.feat.rev .feat-text {
+  order: 1;
+  transform: translateX(-160px) translateY(30px);
+}
+.feat.rev.in-view .feat-text {
+  transform: translateX(0) translateY(0);
+  opacity: 1;
+}
+
+/* 画像プレースホルダー */
+.feat-img-inner {
+  width: 100%;
+  height: 100%;
+  min-height: 460px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.feat-img-bg { position: absolute; inset: 0; }
+.feat-img-label { position: relative; z-index: 1; text-align: center; }
+.feat-icon { font-size: 80px; display: block; margin-bottom: 16px; opacity: 0.5; }
+.feat-caption { font-size: 11px; color: rgba(255,255,255,0.3); letter-spacing: 0.18em; line-height: 1.8; }
+
+/* テキスト */
+.feat-num { font-family: 'Bebas Neue', sans-serif; font-size: 84px; line-height: 1; color: rgba(255,255,255,0.05); margin-bottom: 4px; }
+.feat-divider { width: 32px; height: 2px; background: var(--orange); margin-bottom: 20px; }
+.feat-title { font-size: clamp(20px,2.8vw,28px); font-weight: 500; color: var(--white); line-height: 1.5; margin-bottom: 16px; }
+.feat-title .hl { color: var(--orange); }
+.feat-body { font-size: 15px; color: rgba(255,255,255,0.55); line-height: 2.0; font-weight: 300; }
+
+/* CAREER */
+.career { background: var(--navy); }
+.career .sec-title { color: var(--white); }
+.career .sec-body { color: rgba(255,255,255,0.55); }
+.steps { margin-top: 64px; position: relative; }
+.steps::before { content: ''; position: absolute; left: 28px; top: 28px; bottom: 28px; width: 2px; background: rgba(255,255,255,0.08); }
+.step { display: flex; gap: 32px; margin-bottom: 48px; }
+.step-n { font-family: 'Bebas Neue', sans-serif; font-size: 14px; width: 58px; height: 58px; min-width: 58px; border: 1.5px solid rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; color: var(--orange); background: var(--navy); position: relative; z-index: 1; }
+.step-n.act { background: var(--orange); border-color: var(--orange); color: var(--white); }
+.step-c { padding-top: 12px; }
+.step-t { font-size: 18px; font-weight: 500; color: var(--white); margin-bottom: 8px; }
+.step-d { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.9; font-weight: 300; }
+.step-tag { display: inline-block; margin-top: 10px; padding: 4px 12px; border: 1px solid rgba(232,96,10,0.4); color: var(--orange-light); font-size: 11px; letter-spacing: 0.1em; }
+
+/* CULTURE */
+.culture { background: var(--cream); }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 2px; margin-top: 60px; background: var(--gray-light); }
+.card { background: var(--white); padding: 36px 28px; transition: background 0.25s; }
+.card:hover { background: var(--navy); }
+.card:hover .card-t { color: var(--white); }
+.card:hover .card-d { color: rgba(255,255,255,0.55); }
+.card:hover .card-icon { background: rgba(232,96,10,0.15); }
+.card-icon { width: 46px; height: 46px; background: var(--cream); display: flex; align-items: center; justify-content: center; font-size: 20px; border-radius: 4px; margin-bottom: 20px; transition: background 0.25s; }
+.card-t { font-size: 16px; font-weight: 500; margin-bottom: 10px; transition: color 0.25s; }
+.card-d { font-size: 14px; line-height: 1.9; color: var(--gray-text); transition: color 0.25s; }
+
+/* MESSAGE */
+.message { background: var(--cream); }
+.msg-inner { display: grid; grid-template-columns: 280px 1fr; gap: 80px; align-items: start; margin-top: 60px; }
+.msg-photo { background: var(--navy); aspect-ratio: 3/4; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+.msg-photo-txt { font-family: 'Bebas Neue', sans-serif; font-size: 40px; color: rgba(255,255,255,0.12); }
+.msg-badge { position: absolute; bottom: 0; left: 0; right: 0; background: var(--orange); padding: 10px 16px; font-size: 12px; color: var(--white); font-weight: 500; }
+.msg-name { font-size: 17px; font-weight: 500; margin-top: 16px; }
+.msg-role { font-size: 12px; color: var(--gray-text); letter-spacing: 0.08em; margin-top: 4px; }
+.msg-body { font-size: 16px; line-height: 2.2; color: var(--gray-text); }
+.msg-body p + p { margin-top: 1.4em; }
+.msg-lead { font-size: 21px; font-weight: 500; color: var(--navy); line-height: 1.7; display: block; margin-bottom: 28px; }
+
+/* CTA */
+.cta { background: var(--orange); padding: 80px 40px; text-align: center; }
+.cta-t { font-family: 'Bebas Neue', sans-serif; font-size: clamp(40px,7vw,80px); color: var(--white); letter-spacing: 0.02em; margin-bottom: 16px; }
+.cta-d { font-size: 16px; color: rgba(255,255,255,0.85); margin-bottom: 40px; font-weight: 300; line-height: 1.9; }
+.cta-btn { display: inline-flex; align-items: center; gap: 12px; padding: 18px 48px; background: var(--white); color: var(--orange); text-decoration: none; font-size: 15px; font-weight: 700; letter-spacing: 0.1em; transition: background 0.2s, color 0.2s; }
+.cta-btn:hover { background: var(--navy); color: var(--white); }
+
+/* FOOTER */
+footer { background: #07101e; padding: 36px 40px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+.footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: rgba(255,255,255,0.4); letter-spacing: 0.1em; }
+.footer-logo span { color: var(--orange); }
+.footer-copy { font-size: 12px; color: rgba(255,255,255,0.2); }
+
+/* RESPONSIVE */
+@media (max-width: 700px) {
+  nav { padding: 16px 20px; }
+  .nav-links { display: none; }
+  .sec { padding: 64px 20px; }
+  .hero { padding: 100px 20px 80px; }
+  .hero-inner { padding-left: 20px; }
+  .feat, .feat.rev { flex-direction: column; }
+  .feat-img, .feat.rev .feat-img { width: 100%; order: 0; transform: translateY(-100px) scale(0.92); }
+  .feat.in-view .feat-img, .feat.rev.in-view .feat-img { transform: translateY(0) scale(1); }
+  .feat-text, .feat.rev .feat-text { order: 1; padding: 40px 24px; transform: translateY(80px); }
+  .feat.in-view .feat-text, .feat.rev.in-view .feat-text { transform: translateY(0); }
+  .msg-inner { grid-template-columns: 1fr; gap: 40px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">TIRE MANAGER <span>f.o.o</span></div>
+  <ul class="nav-links">
+    <li><a href="#features">仕事について</a></li>
+    <li><a href="#career">キャリア</a></li>
+    <li><a href="#culture">環境・制度</a></li>
+    <li><a href="#message">代表メッセージ</a></li>
+    <li><a href="#contact">採用情報</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-accent"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Work at Tire Manager f.o.o</div>
+    <h1 class="hero-title">広島の物流を、<br><span class="hl">タイヤ</span>から<br>支える仕事。</h1>
+    <p class="hero-sub">タイヤが止まれば、物流が止まる。<br>食卓に届く食材も、建設現場の資材も——<br>その足元を守るのが、私たちの仕事です。</p>
+    <a href="#career" class="hero-cta">私たちと一緒に働く</a>
+  </div>
+  <div class="hero-bg">TIRE</div>
+</section>
+
+<section class="features" id="features">
+
+  <div class="feat" data-feat>
+    <div class="feat-img"><img src="https://mitsurumukaihata.github.io/foo-work/images/feat1.jpg" alt="タイヤ交換現場" style="width:100%;height:100%;min-height:460px;object-fit:cover;display:block;"></div>
+    <div class="feat-text">
+      <div class="feat-num">01</div>
+      <div class="feat-divider"></div>
+      <h3 class="feat-title">1台1台に、<br><span class="hl">全力で向き合う。</span></h3>
+      <p class="feat-body">達成感は大きな数字じゃない。目の前のトラックの交換がきちんと終わったとき——その瞬間の積み重ねが、誇りになっていく。</p>
+    </div>
+  </div>
+
+  <div class="feat rev" data-feat>
+    <div class="feat-img"><img src="https://mitsurumukaihata.github.io/foo-work/images/feat2.jpg" alt="作業スタッフ" style="width:100%;height:100%;min-height:460px;object-fit:cover;display:block;"></div>
+    <div class="feat-text">
+      <div class="feat-num">02</div>
+      <div class="feat-divider"></div>
+      <h3 class="feat-title">良かれと動いたことを、<br><span class="hl">否定しない。</span></h3>
+      <p class="feat-body">少しズレていても構わない。そこから修正すればいい。そこにしか"伸びしろ"はない——それがこの会社の考え方です。</p>
+    </div>
+  </div>
+
+  <div class="feat" data-feat>
+    <div class="feat-img"><img src="https://mitsurumukaihata.github.io/foo-work/images/feat3.jpg" alt="出張現場" style="width:100%;height:100%;min-height:460px;object-fit:cover;display:block;"></div>
+    <div class="feat-text">
+      <div class="feat-num">03</div>
+      <div class="feat-divider"></div>
+      <h3 class="feat-title">広島の安心を、<br><span class="hl">足元から守る。</span></h3>
+      <p class="feat-body">「今日も安全に運べるように整える」——その安心は見えないけれど、確かにそこにある。地道だけど、かっこいい仕事にしたい。</p>
+    </div>
+  </div>
+
+</section>
+
+<section class="sec career" id="career">
+  <div class="container">
+    <div class="sec-label">Career path</div>
+    <h2 class="sec-title">ここで、<br>どう育つか。</h2>
+    <p class="sec-body">正解は一つじゃない。技術を極める人、お客さんとの関係を築く人、後輩を育てる人。あなたに合ったかたちで成長できる環境を用意しています。</p>
+    <div class="steps">
+      <div class="step"><div class="step-n act">01</div><div class="step-c"><div class="step-t">現場で技術を身につける</div><p class="step-d">タイヤ交換・点検の基礎から丁寧に教えます。最初はできなくて当たり前。先輩と一緒に、一つひとつ覚えていきましょう。</p><span class="step-tag">入社〜</span></div></div>
+      <div class="step"><div class="step-n">02</div><div class="step-c"><div class="step-t">顧客対応・ルート営業へ</div><p class="step-d">技術に自信がついたら、お客様との窓口も担当します。「このタイヤについて相談したい」という声に自分で答えられるようになる。</p><span class="step-tag">1〜2年目</span></div></div>
+      <div class="step"><div class="step-n">03</div><div class="step-c"><div class="step-t">後輩を育てる・チームをまとめる</div><p class="step-d">経験が積まれると、自然に「教える側」になっていく。後輩の成長を見守ることが、自分のスキルをさらに深めることにもつながります。</p><span class="step-tag">3年目〜</span></div></div>
+      <div class="step"><div class="step-n">04</div><div class="step-c"><div class="step-t">自分らしいポジションへ</div><p class="step-d">教育担当・マネジメント・新規事業——どこへ向かうかは、あなたと一緒に考えます。年齢を重ねても安心して働ける役割設計を目指しています。</p><span class="step-tag">長期的に</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec culture" id="culture">
+  <div class="container">
+    <div class="sec-label">Work culture</div>
+    <h2 class="sec-title">働く環境と、<br>制度。</h2>
+    <div class="cards">
+      <div class="card"><div class="card-icon">🏕️</div><div class="card-t">キャンプ車の貸出制度</div><p class="card-d">会社のキャンプ用車両を社員が利用できます。「仕事以外の時間も豊かに」という考えから生まれた制度です。</p></div>
+      <div class="card"><div class="card-icon">📍</div><div class="card-t">2拠点・通いやすい環境</div><p class="card-d">五日市と志和、2つの拠点があります。住まいや生活スタイルに合わせて通える拠点で働けます。</p></div>
+      <div class="card"><div class="card-icon">🌱</div><div class="card-t">得意なことで活躍できる</div><p class="card-d">技術・営業・管理、それぞれに適した役割を一緒に探します。「なんでもやれ」ではなく「あなたに合った仕事を」。</p></div>
+      <div class="card"><div class="card-icon">💪</div><div class="card-t">ジム・マッサージ制度</div><p class="card-d">体を使う仕事だからこそ、健康管理も会社がサポート。ジム・マッサージ利用の福利厚生制度があります。</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec message" id="message">
+  <div class="container">
+    <div class="sec-label">From the representative</div>
+    <h2 class="sec-title">代表から、<br>あなたへ。</h2>
+    <div class="msg-inner">
+      <div>
+        <div class="msg-photo"><div class="msg-photo-txt">PHOTO</div><div class="msg-badge">代表　向畑</div></div>
+        <div class="msg-name">向畑　みつ</div>
+        <div class="msg-role">有限会社 タイヤマネージャー フー / 代表</div>
+      </div>
+      <div class="msg-body">
+        <span class="msg-lead">「タイヤを"売る"のではなく、"支える"のが私たちの仕事。」</span>
+        <p>この仕事の達成感は、大きな数字じゃなくて——1台1台の交換がきちんと終わったとき、まず感じられるものだと思っています。そこから少しずつ、ユーザー単位、月単位、季節単位で実感できるようになると、自然と「自分の仕事に誇りが持てる」ようになってくる。</p>
+        <p>私が大切にしているのは、「良かれと思って動いたことを否定しない」ということです。少しズレていても構わない。そこから修正すればいい。そこにしか"伸びしろ"はないと思っています。</p>
+        <p>8年前は、事務も営業も現場作業も全部ひとりでやっていました。正直、死ぬかと思った。でも今は、信頼できる社員たちに支えられて、挑戦したいことができています。今の会社があるのは、今ここにいるスタッフのおかげです。</p>
+        <p>"f.o.o"には「field of over——一歩ずつ進めば、必ずたどり着ける場所がある」という意味を込めました。山道のようにアップダウンがあっても、コツコツ歩く人にだけ見える景色がある。それをここで、みんなと一緒に見にいきたいと思っています。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="contact">
+  <h2 class="cta-t">まずは話を聞きに来てください。</h2>
+  <p class="cta-d">履歴書より先に、人を見たい。<br>気軽にお問い合わせください。</p>
+  <a href="/cdn-cgi/l/email-protection#0960676f66496c71686479656c276a6664" class="cta-btn">採用について問い合わせる</a>
+</section>
+
+<footer>
+  <div class="footer-logo">TIRE MANAGER <span>f.o.o</span></div>
+  <div class="footer-copy">© 有限会社 タイヤマネージャー フー. All rights reserved.</div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+(function() {
+  var feats = document.querySelectorAll('[data-feat]');
+
+  function check() {
+    var windowH = window.innerHeight;
+    feats.forEach(function(el) {
+      var rect = el.getBoundingClientRect();
+      if (rect.top < windowH * 0.82) {
+        el.classList.add('in-view');
+      }
+    });
+  }
+
+  // 初回チェック
+  che
