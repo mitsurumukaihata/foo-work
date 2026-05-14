@@ -263,7 +263,10 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 /* CULTURE MODAL */
 .cmodal-bg { display: none; position: fixed; inset: 0; background: rgba(13,31,60,0.78); z-index: 200; align-items: flex-start; justify-content: center; overflow-y: auto; padding: 0; }
 .cmodal-bg.open { display: flex; }
-.cmodal { background: var(--cream); max-width: 720px; width: 100%; min-height: 100vh; position: relative; }
+.cmodal { background: var(--cream); max-width: 720px; width: 100%; min-height: 100vh; position: relative; will-change: transform; }
+.cmodal-grab { position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 44px; height: 4px; background: rgba(255,255,255,0.4); border-radius: 4px; z-index: 11; opacity: 0; transition: opacity 0.2s; pointer-events: none; }
+.cmodal-bg.is-dragging .cmodal-grab { opacity: 1; }
+@media (hover: none) and (pointer: coarse) { .cmodal-grab { opacity: 1; } }
 .cmodal-hero { background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%); color: var(--cream); padding: 48px 40px 36px; position: relative; overflow: hidden; }
 .cmodal-hero::before { content: ''; position: absolute; top: -50%; right: -10%; width: 60%; height: 200%; background: radial-gradient(circle, rgba(232,96,10,0.18) 0%, transparent 60%); pointer-events: none; }
 .cmodal-hero-icon { width: 72px; height: 72px; background: rgba(255,255,255,0.08); border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; color: var(--orange-light); margin-bottom: 24px; position: relative; }
@@ -350,7 +353,10 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 /* RECRUIT MODAL */
 .rmodal-bg { display: none; position: fixed; inset: 0; background: rgba(13,31,60,0.75); z-index: 200; align-items: flex-start; justify-content: center; padding: 40px 20px; overflow-y: auto; }
 .rmodal-bg.open { display: flex; }
-.rmodal { background: var(--cream); max-width: 560px; width: 100%; padding: 44px 40px; position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+.rmodal { background: var(--cream); max-width: 560px; width: 100%; padding: 44px 40px; position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.3); will-change: transform; }
+.rmodal-grab { position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 44px; height: 4px; background: rgba(13,31,60,0.18); border-radius: 4px; z-index: 11; opacity: 0; transition: opacity 0.2s; pointer-events: none; }
+.rmodal-bg.is-dragging .rmodal-grab { opacity: 1; }
+@media (hover: none) and (pointer: coarse) { .rmodal-grab { opacity: 1; } }
 .rmodal-close { position: absolute; top: 14px; right: 18px; background: none; border: 0; font-size: 24px; cursor: pointer; color: var(--navy); padding: 4px 10px; line-height: 1; }
 .rmodal-close:hover { color: var(--orange); }
 .rmodal-t { font-family: 'Bebas Neue', sans-serif; font-size: 30px; color: var(--navy); margin-bottom: 8px; letter-spacing: 0.04em; }
@@ -551,11 +557,12 @@ footer { background: #07101e; padding: 36px 40px; display: flex; justify-content
 <!-- 制度・カルチャー モーダル (work culture cards) -->
 <div class="cmodal-bg" id="culture-modal" onclick="if(event.target===this)closeCultureModal()">
   <div class="cmodal">
+    <div class="cmodal-grab" aria-hidden="true"></div>
     <div class="cmodal-hero">
       <button type="button" class="cmodal-close" onclick="closeCultureModal()" aria-label="閉じる">✕</button>
-      <div class="cmodal-hero-icon" id="cmodal-icon"></div>
-      <div class="cmodal-hero-label" id="cmodal-label">Work culture</div>
-      <h2 class="cmodal-hero-title" id="cmodal-title"></h2>
+      <div class="cmodal-hero-icon" id="cmodal-icon" data-anim data-d="1"></div>
+      <div class="cmodal-hero-label" id="cmodal-label" data-anim data-d="2">Work culture</div>
+      <div data-mask><h2 class="cmodal-hero-title" id="cmodal-title"></h2></div>
     </div>
     <div class="cmodal-body" id="cmodal-body"></div>
   </div>
@@ -564,6 +571,7 @@ footer { background: #07101e; padding: 36px 40px; display: flex; justify-content
 <!-- 採用フォーム モーダル -->
 <div class="rmodal-bg" id="recruit-modal" onclick="if(event.target===this)closeRecruitForm()">
   <div class="rmodal">
+    <div class="rmodal-grab" aria-hidden="true"></div>
     <button type="button" class="rmodal-close" onclick="closeRecruitForm()" aria-label="閉じる">✕</button>
     <h3 class="rmodal-t">採用についてのお問い合わせ</h3>
     <p class="rmodal-d">必須項目だけでもOKです。気軽にお送りください。<br>担当より2営業日以内にご連絡します。</p>
@@ -755,12 +763,16 @@ var CULTURE_DATA = {
 function openCultureModal(key) {
   var data = CULTURE_DATA[key];
   if (!data) return;
+  var modal = document.getElementById('culture-modal');
+  // 前回の状態をリセット (再オープン時にアニメ再生)
+  modal.classList.remove('in-view');
   document.getElementById('cmodal-icon').innerHTML = data.icon;
   document.getElementById('cmodal-title').innerHTML = data.title;
   var bodyEl = document.getElementById('cmodal-body');
   var html = '';
+  var di = 3; // hero icon=1, label=2, title=mask. 本文セクションは d=3 から
   data.sections.forEach(function(sec) {
-    html += '<div class="cmodal-sec">';
+    html += '<div class="cmodal-sec" data-anim data-d="' + (di++) + '">';
     html += '<div class="cmodal-sec-label">' + sec.label + '</div>';
     if (sec.html) {
       html += '<div class="cmodal-lead">' + sec.html + '</div>';
@@ -788,16 +800,28 @@ function openCultureModal(key) {
     html += '</div>';
   });
   if (data.note) {
-    html += '<div class="cmodal-note">' + data.note + '</div>';
+    html += '<div class="cmodal-note" data-anim data-d="' + (di++) + '">' + data.note + '</div>';
   }
-  html += '<div style="margin-top:32px;text-align:center;"><a href="#contact" class="cmodal-cta" onclick="closeCultureModal()">この制度がある会社で働く</a></div>';
+  html += '<div data-anim data-d="' + (di++) + '" style="margin-top:32px;text-align:center;"><a href="#contact" class="cmodal-cta" onclick="closeCultureModal()">この制度がある会社で働く</a></div>';
   bodyEl.innerHTML = html;
-  document.getElementById('culture-modal').classList.add('open');
+  modal.classList.add('open');
   document.body.style.overflow = 'hidden';
-  bodyEl.parentElement.scrollTop = 0;
+  modal.scrollTop = 0;
+  // レイアウト確定後に in-view を付けてアニメ発火
+  requestAnimationFrame(function() {
+    requestAnimationFrame(function() {
+      modal.classList.add('in-view');
+    });
+  });
 }
 function closeCultureModal() {
-  document.getElementById('culture-modal').classList.remove('open');
+  var modal = document.getElementById('culture-modal');
+  modal.classList.remove('open');
+  modal.classList.remove('in-view');
+  // スワイプ用に付けた transform を確実にリセット
+  var inner = modal.querySelector('.cmodal');
+  if (inner) { inner.style.transform = ''; inner.style.transition = ''; }
+  modal.style.background = '';
   document.body.style.overflow = '';
 }
 
@@ -809,7 +833,13 @@ function openRecruitForm() {
   document.body.style.overflow = 'hidden';
 }
 function closeRecruitForm() {
-  document.getElementById('recruit-modal').classList.remove('open');
+  var modal = document.getElementById('recruit-modal');
+  modal.classList.remove('open');
+  // スワイプ用の transform をリセット
+  var inner = modal.querySelector('.rmodal');
+  if (inner) { inner.style.transform = ''; inner.style.transition = ''; }
+  modal.style.background = '';
+  modal.classList.remove('is-dragging');
   document.body.style.overflow = '';
   var msg = document.getElementById('rmodal-msg');
   if (msg) msg.style.display = 'none';
@@ -852,6 +882,81 @@ async function submitRecruit(e) {
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') { closeRecruitForm(); closeCultureModal(); }
 });
+
+// ========= スワイプダウンで閉じる (iOS シート風) =========
+// 内部要素のスクロールが先頭(scrollTop=0)のときだけ、下方向ドラッグで閉じる動作を許可
+function setupSwipeClose(modalBgEl, closeFunc, scrollerSelector) {
+  if (!modalBgEl) return;
+  var innerSel = scrollerSelector || ':first-child';
+  var inner = modalBgEl.querySelector(innerSel);
+  if (!inner) inner = modalBgEl.firstElementChild;
+  var startY = 0, currentY = 0, dragging = false;
+  var THRESHOLD = 110; // px ドラッグで閉じる
+
+  function reset(animated) {
+    if (!inner) return;
+    inner.style.transition = animated ? 'transform 0.32s cubic-bezier(0.16, 1, 0.3, 1)' : 'none';
+    inner.style.transform = '';
+    modalBgEl.style.background = '';
+    modalBgEl.classList.remove('is-dragging');
+    if (animated) {
+      setTimeout(function() { if (inner) inner.style.transition = ''; }, 320);
+    }
+  }
+
+  modalBgEl.addEventListener('touchstart', function(e) {
+    if (!modalBgEl.classList.contains('open')) return;
+    // スクロール位置がトップでない時はネイティブスクロールに任せる
+    if (modalBgEl.scrollTop > 4) return;
+    startY = e.touches[0].clientY;
+    currentY = 0;
+    dragging = true;
+  }, { passive: true });
+
+  modalBgEl.addEventListener('touchmove', function(e) {
+    if (!dragging || !inner) return;
+    currentY = e.touches[0].clientY - startY;
+    if (currentY < 0) {
+      // 上方向に動かしたら諦めて通常スクロールに戻す
+      dragging = false;
+      reset(false);
+      return;
+    }
+    inner.style.transition = 'none';
+    inner.style.transform = 'translateY(' + currentY + 'px)';
+    modalBgEl.classList.add('is-dragging');
+    // 背景を薄くしてリリース感を出す
+    var bgAlpha = Math.max(0.20, 0.78 - currentY / 800);
+    modalBgEl.style.background = 'rgba(13,31,60,' + bgAlpha + ')';
+  }, { passive: true });
+
+  modalBgEl.addEventListener('touchend', function() {
+    if (!dragging) return;
+    dragging = false;
+    if (currentY > THRESHOLD && inner) {
+      // 閉じる
+      inner.style.transition = 'transform 0.28s cubic-bezier(0.4, 0, 1, 1)';
+      inner.style.transform = 'translateY(110vh)';
+      modalBgEl.style.background = 'rgba(13,31,60,0)';
+      setTimeout(function() {
+        closeFunc();
+        // close 内で reset 済みだが、ここでも保険
+        reset(false);
+      }, 280);
+    } else {
+      reset(true);
+    }
+  });
+
+  // タップでドラッグ判定が変な状態に残らないように
+  modalBgEl.addEventListener('touchcancel', function() {
+    if (dragging) { dragging = false; reset(true); }
+  });
+}
+
+// 両モーダルにスワイプダウンクローズを適用
+setupSwipeClose(document.getElementById('culture-modal'), closeCultureModal, '.cmodal');
+setupSwipeClose(document.getElementById('recruit-modal'), closeRecruitForm, '.rmodal');
 </script>
 </body>
 </html>
