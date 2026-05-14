@@ -88,6 +88,54 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
   .ethos-title-wrap { margin-bottom: 44px; }
 }
 
+/* ============================================
+   共通スクロールリビール (Hero / Career / Culture / Message / CTA)
+============================================ */
+[data-anim] {
+  opacity: 0; transform: translateY(28px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.in-view > [data-anim],
+.in-view [data-anim] { opacity: 1; transform: translateY(0); }
+.in-view [data-anim][data-d="1"] { transition-delay: 0.05s; }
+.in-view [data-anim][data-d="2"] { transition-delay: 0.18s; }
+.in-view [data-anim][data-d="3"] { transition-delay: 0.32s; }
+.in-view [data-anim][data-d="4"] { transition-delay: 0.46s; }
+.in-view [data-anim][data-d="5"] { transition-delay: 0.60s; }
+.in-view [data-anim][data-d="6"] { transition-delay: 0.74s; }
+.in-view [data-anim][data-d="7"] { transition-delay: 0.88s; }
+.in-view [data-anim][data-d="8"] { transition-delay: 1.02s; }
+
+/* タイトルのマスクリビール (overflow:hidden の親内で translateY 120% → 0) */
+[data-mask] { overflow: hidden; display: block; padding-bottom: 0.1em; }
+[data-mask] > * { transform: translateY(120%); transition: transform 1.0s cubic-bezier(0.65, 0, 0.1, 1) 0.20s; will-change: transform; }
+.in-view [data-mask] > * { transform: translateY(0); }
+
+/* Hero は初期表示でゆっくり出すため遅延を長めに */
+.hero.in-view [data-anim][data-d="1"] { transition-delay: 0.15s; }
+.hero.in-view [data-anim][data-d="2"] { transition-delay: 0.50s; }
+.hero.in-view [data-anim][data-d="3"] { transition-delay: 0.70s; }
+.hero.in-view [data-anim][data-d="4"] { transition-delay: 0.90s; }
+.hero.in-view [data-mask] > * { transition-delay: 0.30s; }
+.hero.in-view [data-mask] > * { transition-duration: 1.2s; }
+
+/* Hero accent line も入場アニメ */
+.hero-accent { transform: scaleY(0); transform-origin: top; transition: transform 1.1s cubic-bezier(0.7, 0, 0.3, 1) 0.05s; }
+.hero.in-view .hero-accent { transform: scaleY(1); }
+.feat-divider { transform: scaleY(0); transform-origin: top; transition: transform 0.7s cubic-bezier(0.7, 0, 0.3, 1) 0.35s; }
+.feat.in-view .feat-divider { transform: scaleY(1); }
+
+/* CTA は背景がオレンジなので、アクセント色を反転 */
+.cta [data-anim] { transition-duration: 0.85s; }
+
+/* アクセシビリティ: prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  [data-anim], [data-mask] > *, .hero-accent, .feat-divider,
+  .ethos [data-anim], .ethos-title { opacity: 1 !important; transform: none !important; transition: none !important; }
+}
+
 /* =============================================
    スライドインセクション
 ============================================= */
@@ -374,13 +422,13 @@ footer { background: #07101e; padding: 36px 40px; display: flex; justify-content
   </ul>
 </nav>
 
-<section class="hero">
+<section class="hero" data-feat>
   <div class="hero-accent"></div>
   <div class="hero-inner">
-    <div class="hero-eyebrow">Work at Tire Manager f.o.o</div>
-    <h1 class="hero-title">広島の物流を、<br><span class="hl">タイヤ</span>から<br>支える仕事。</h1>
-    <p class="hero-sub">タイヤが止まれば、物流が止まる。<br>食卓に届く食材も、建設現場の資材も——<br>その足元を守るのが、私たちの仕事です。</p>
-    <a href="#career" class="hero-cta">私たちと一緒に働く</a>
+    <div class="hero-eyebrow" data-anim data-d="1">Work at Tire Manager f.o.o</div>
+    <div data-mask><h1 class="hero-title">広島の物流を、<br><span class="hl">タイヤ</span>から<br>支える仕事。</h1></div>
+    <p class="hero-sub" data-anim data-d="3">タイヤが止まれば、物流が止まる。<br>食卓に届く食材も、建設現場の資材も——<br>その足元を守るのが、私たちの仕事です。</p>
+    <a href="#career" class="hero-cta" data-anim data-d="4">私たちと一緒に働く</a>
   </div>
   <div class="hero-bg">TIRE</div>
 </section>
@@ -431,44 +479,44 @@ footer { background: #07101e; padding: 36px 40px; display: flex; justify-content
 
 </section>
 
-<section class="sec career" id="career">
+<section class="sec career" id="career" data-feat>
   <div class="container">
-    <div class="sec-label">Career path</div>
-    <h2 class="sec-title">ここで、<br>どう育つか。</h2>
-    <p class="sec-body">正解は一つじゃない。技術を極める人、お客さんとの関係を築く人、後輩を育てる人。あなたに合ったかたちで成長できる環境を用意しています。</p>
+    <div class="sec-label" data-anim data-d="1">Career path</div>
+    <div data-mask><h2 class="sec-title">ここで、<br>どう育つか。</h2></div>
+    <p class="sec-body" data-anim data-d="2">正解は一つじゃない。技術を極める人、お客さんとの関係を築く人、後輩を育てる人。あなたに合ったかたちで成長できる環境を用意しています。</p>
     <div class="steps">
-      <div class="step"><div class="step-n act">01</div><div class="step-c"><div class="step-t">現場で技術を身につける</div><p class="step-d">タイヤ交換・点検の基礎から丁寧に教えます。最初はできなくて当たり前。先輩と一緒に、一つひとつ覚えていきましょう。</p><span class="step-tag">入社〜</span></div></div>
-      <div class="step"><div class="step-n">02</div><div class="step-c"><div class="step-t">顧客対応・ルート営業へ</div><p class="step-d">技術に自信がついたら、お客様との窓口も担当します。「このタイヤについて相談したい」という声に自分で答えられるようになる。</p><span class="step-tag">1〜2年目</span></div></div>
-      <div class="step"><div class="step-n">03</div><div class="step-c"><div class="step-t">後輩を育てる・チームをまとめる</div><p class="step-d">経験が積まれると、自然に「教える側」になっていく。後輩の成長を見守ることが、自分のスキルをさらに深めることにもつながります。</p><span class="step-tag">3年目〜</span></div></div>
-      <div class="step"><div class="step-n">04</div><div class="step-c"><div class="step-t">自分らしいポジションへ</div><p class="step-d">教育担当・マネジメント・新規事業——どこへ向かうかは、あなたと一緒に考えます。年齢を重ねても安心して働ける役割設計を目指しています。</p><span class="step-tag">長期的に</span></div></div>
+      <div class="step" data-anim data-d="3"><div class="step-n act">01</div><div class="step-c"><div class="step-t">現場で技術を身につける</div><p class="step-d">タイヤ交換・点検の基礎から丁寧に教えます。最初はできなくて当たり前。先輩と一緒に、一つひとつ覚えていきましょう。</p><span class="step-tag">入社〜</span></div></div>
+      <div class="step" data-anim data-d="4"><div class="step-n">02</div><div class="step-c"><div class="step-t">顧客対応・ルート営業へ</div><p class="step-d">技術に自信がついたら、お客様との窓口も担当します。「このタイヤについて相談したい」という声に自分で答えられるようになる。</p><span class="step-tag">1〜2年目</span></div></div>
+      <div class="step" data-anim data-d="5"><div class="step-n">03</div><div class="step-c"><div class="step-t">後輩を育てる・チームをまとめる</div><p class="step-d">経験が積まれると、自然に「教える側」になっていく。後輩の成長を見守ることが、自分のスキルをさらに深めることにもつながります。</p><span class="step-tag">3年目〜</span></div></div>
+      <div class="step" data-anim data-d="6"><div class="step-n">04</div><div class="step-c"><div class="step-t">自分らしいポジションへ</div><p class="step-d">教育担当・マネジメント・新規事業——どこへ向かうかは、あなたと一緒に考えます。年齢を重ねても安心して働ける役割設計を目指しています。</p><span class="step-tag">長期的に</span></div></div>
     </div>
   </div>
 </section>
 
-<section class="sec culture" id="culture">
+<section class="sec culture" id="culture" data-feat>
   <div class="container">
-    <div class="sec-label">Work culture</div>
-    <h2 class="sec-title">働く環境と、<br>制度。</h2>
+    <div class="sec-label" data-anim data-d="1">Work culture</div>
+    <div data-mask><h2 class="sec-title">働く環境と、<br>制度。</h2></div>
     <div class="cards">
-      <div class="card" onclick="openCultureModal('gym')"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="8" width="3" height="8" rx="1"/><rect x="19" y="8" width="3" height="8" rx="1"/><rect x="6" y="11" width="12" height="2" rx="0.5"/><line x1="5" y1="9" x2="5" y2="15"/><line x1="19" y1="9" x2="19" y2="15"/></svg></div><div class="card-t">スポーツジム利用補助</div><p class="card-d">体が資本の仕事だからこそ、会社がジム代をサポート。代表が一番大事にしている福利厚生です。心身を整え、長く働ける環境を本気で作っています。</p><span class="card-more">詳しく見る →</span></div>
-      <div class="card" onclick="openCultureModal('health')"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/></svg></div><div class="card-t">マッサージ・サプリ支給</div><p class="card-d">疲労回復のマッサージ補助と、必要なサプリメントを会社から支給。日々の体のメンテナンスも仕事のうちと考えています。</p><span class="card-more">詳しく見る →</span></div>
-      <div class="card" onclick="openCultureModal('loc')"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 7-8 13-8 13s-8-6-8-13a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></div><div class="card-t">通いやすい環境</div><p class="card-d">五日市エリアの本社・整備工場と、東広島の志和倉庫。住まいや生活スタイルに合わせて、通いやすい拠点で働けます。</p><span class="card-more">詳しく見る →</span></div>
-      <div class="card" onclick="openCultureModal('role')"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><div class="card-t">得意なことで活躍できる</div><p class="card-d">技術・営業・管理、それぞれに適した役割を一緒に探します。「なんでもやれ」ではなく「あなたに合った仕事を」。</p><span class="card-more">詳しく見る →</span></div>
+      <div class="card" data-anim data-d="2" onclick="openCultureModal('gym')"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="8" width="3" height="8" rx="1"/><rect x="19" y="8" width="3" height="8" rx="1"/><rect x="6" y="11" width="12" height="2" rx="0.5"/><line x1="5" y1="9" x2="5" y2="15"/><line x1="19" y1="9" x2="19" y2="15"/></svg></div><div class="card-t">スポーツジム利用補助</div><p class="card-d">体が資本の仕事だからこそ、会社がジム代をサポート。代表が一番大事にしている福利厚生です。心身を整え、長く働ける環境を本気で作っています。</p><span class="card-more">詳しく見る →</span></div>
+      <div class="card" data-anim data-d="3" onclick="openCultureModal('health')"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/></svg></div><div class="card-t">マッサージ・サプリ支給</div><p class="card-d">疲労回復のマッサージ補助と、必要なサプリメントを会社から支給。日々の体のメンテナンスも仕事のうちと考えています。</p><span class="card-more">詳しく見る →</span></div>
+      <div class="card" data-anim data-d="4" onclick="openCultureModal('loc')"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 7-8 13-8 13s-8-6-8-13a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></div><div class="card-t">通いやすい環境</div><p class="card-d">五日市エリアの本社・整備工場と、東広島の志和倉庫。住まいや生活スタイルに合わせて、通いやすい拠点で働けます。</p><span class="card-more">詳しく見る →</span></div>
+      <div class="card" data-anim data-d="5" onclick="openCultureModal('role')"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><div class="card-t">得意なことで活躍できる</div><p class="card-d">技術・営業・管理、それぞれに適した役割を一緒に探します。「なんでもやれ」ではなく「あなたに合った仕事を」。</p><span class="card-more">詳しく見る →</span></div>
     </div>
   </div>
 </section>
 
-<section class="sec message" id="message">
+<section class="sec message" id="message" data-feat>
   <div class="container">
-    <div class="sec-label">From the representative</div>
-    <h2 class="sec-title">代表から、<br>あなたへ。</h2>
+    <div class="sec-label" data-anim data-d="1">From the representative</div>
+    <div data-mask><h2 class="sec-title">代表から、<br>あなたへ。</h2></div>
     <div class="msg-inner">
-      <div>
+      <div data-anim data-d="3">
         <div class="msg-photo"><div class="msg-photo-txt">PHOTO</div><div class="msg-badge">代表　向畑</div></div>
-        <div class="msg-name">向畑　みつ</div>
+        <div class="msg-name">向畑 充</div>
         <div class="msg-role">有限会社 タイヤマネージャー フー / 代表</div>
       </div>
-      <div class="msg-body">
+      <div class="msg-body" data-anim data-d="4">
         <span class="msg-lead">「タイヤを"売る"のではなく、"支える"のが私たちの仕事。」</span>
         <p>この仕事の達成感は、大きな数字じゃなくて——1台1台の交換がきちんと終わったとき、まず感じられるものだと思っています。そこから少しずつ、ユーザー単位、月単位、季節単位で実感できるようになると、自然と「自分の仕事に誇りが持てる」ようになってくる。</p>
         <p>私が大切にしているのは、「良かれと思って動いたことを否定しない」ということです。少しズレていても構わない。そこから修正すればいい。そこにしか"伸びしろ"はないと思っています。</p>
@@ -479,10 +527,10 @@ footer { background: #07101e; padding: 36px 40px; display: flex; justify-content
   </div>
 </section>
 
-<section class="cta" id="contact">
-  <h2 class="cta-t">まずは話を聞きに来てください。</h2>
-  <p class="cta-d">履歴書より先に、人を見たい。<br>気軽にお問い合わせください。</p>
-  <div class="cta-row">
+<section class="cta" id="contact" data-feat>
+  <div data-mask><h2 class="cta-t">まずは話を聞きに来てください。</h2></div>
+  <p class="cta-d" data-anim data-d="2">履歴書より先に、人を見たい。<br>気軽にお問い合わせください。</p>
+  <div class="cta-row" data-anim data-d="3">
     <a href="https://lin.ee/OVSz7kO" target="_blank" rel="noopener" class="cta-btn cta-btn-line">
       <span class="cta-btn-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span><span class="cta-btn-lbl">LINEで相談する</span>
     </a>
