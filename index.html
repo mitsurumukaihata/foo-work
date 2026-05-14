@@ -182,8 +182,43 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .cta { background: var(--orange); padding: 80px 40px; text-align: center; }
 .cta-t { font-family: 'Bebas Neue', sans-serif; font-size: clamp(40px,7vw,80px); color: var(--white); letter-spacing: 0.02em; margin-bottom: 16px; }
 .cta-d { font-size: 16px; color: rgba(255,255,255,0.85); margin-bottom: 40px; font-weight: 300; line-height: 1.9; }
-.cta-btn { display: inline-flex; align-items: center; gap: 12px; padding: 18px 48px; background: var(--white); color: var(--orange); text-decoration: none; font-size: 15px; font-weight: 700; letter-spacing: 0.1em; transition: background 0.2s, color 0.2s; }
-.cta-btn:hover { background: var(--navy); color: var(--white); }
+.cta-btn { display: inline-flex; align-items: center; gap: 12px; padding: 18px 32px; background: var(--white); color: var(--orange); text-decoration: none; font-size: 15px; font-weight: 700; letter-spacing: 0.08em; transition: background 0.2s, color 0.2s, transform 0.15s; border: 0; cursor: pointer; font-family: inherit; line-height: 1.2; min-width: 240px; justify-content: center; }
+.cta-btn:hover { background: var(--navy); color: var(--white); transform: translateY(-2px); }
+.cta-btn-ico { font-size: 22px; }
+.cta-btn-lbl small { display: block; font-size: 11px; font-weight: 400; letter-spacing: 0.05em; margin-top: 4px; opacity: 0.85; }
+.cta-btn.cta-btn-line { background: #06C755; color: #fff; }
+.cta-btn.cta-btn-line:hover { background: #04a847; color: #fff; }
+.cta-btn.cta-btn-tel { background: var(--white); color: var(--orange); }
+.cta-btn.cta-btn-tel:hover { background: var(--navy); color: #fff; }
+.cta-btn.cta-btn-form { background: var(--navy); color: #fff; }
+.cta-btn.cta-btn-form:hover { background: #07101e; color: #fff; }
+.cta-row { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; align-items: stretch; }
+
+/* RECRUIT MODAL */
+.rmodal-bg { display: none; position: fixed; inset: 0; background: rgba(13,31,60,0.75); z-index: 200; align-items: flex-start; justify-content: center; padding: 40px 20px; overflow-y: auto; }
+.rmodal-bg.open { display: flex; }
+.rmodal { background: var(--cream); max-width: 560px; width: 100%; padding: 44px 40px; position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+.rmodal-close { position: absolute; top: 14px; right: 18px; background: none; border: 0; font-size: 24px; cursor: pointer; color: var(--navy); padding: 4px 10px; line-height: 1; }
+.rmodal-close:hover { color: var(--orange); }
+.rmodal-t { font-family: 'Bebas Neue', sans-serif; font-size: 30px; color: var(--navy); margin-bottom: 8px; letter-spacing: 0.04em; }
+.rmodal-d { font-size: 13px; color: var(--gray-text); margin-bottom: 28px; line-height: 1.8; }
+.rfield { margin-bottom: 18px; }
+.rfield label { display: block; font-size: 12px; font-weight: 500; color: var(--navy); margin-bottom: 6px; letter-spacing: 0.04em; }
+.rfield label .req { color: var(--orange); margin-left: 4px; }
+.rfield input, .rfield select, .rfield textarea { width: 100%; padding: 11px 13px; border: 1px solid var(--gray-light); background: var(--white); font-family: inherit; font-size: 14px; color: var(--navy); }
+.rfield input:focus, .rfield select:focus, .rfield textarea:focus { outline: none; border-color: var(--orange); }
+.rfield textarea { resize: vertical; min-height: 90px; line-height: 1.6; }
+.rfield-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 0; }
+.rmodal-actions { display: flex; gap: 12px; margin-top: 28px; }
+.rmodal-submit { flex: 1; padding: 14px 24px; background: var(--orange); color: var(--white); border: 0; font-family: inherit; font-size: 14px; font-weight: 500; letter-spacing: 0.08em; cursor: pointer; transition: background 0.2s; }
+.rmodal-submit:hover { background: #c94e00; }
+.rmodal-submit:disabled { background: var(--gray-light); color: var(--gray-text); cursor: not-allowed; }
+.rmodal-cancel { padding: 14px 24px; background: transparent; color: var(--navy); border: 1px solid var(--navy); font-family: inherit; font-size: 14px; cursor: pointer; }
+.rmodal-cancel:hover { background: var(--navy); color: var(--white); }
+.rmodal-msg { padding: 12px 14px; margin-top: 16px; font-size: 13px; line-height: 1.6; }
+.rmodal-msg.ok { background: #e8f5e9; color: #1b5e20; border-left: 3px solid #1b5e20; }
+.rmodal-msg.err { background: #ffebee; color: #b71c1c; border-left: 3px solid #b71c1c; }
+.rmodal-hp { position: absolute; left: -9999px; opacity: 0; pointer-events: none; }
 
 /* FOOTER */
 footer { background: #07101e; padding: 36px 40px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
@@ -209,9 +244,15 @@ footer { background: #07101e; padding: 36px 40px; display: flex; justify-content
   .feat-num { font-size: 56px; }
   .msg-inner { grid-template-columns: 1fr; gap: 40px; }
   .hero-cta { padding: 14px 28px; font-size: 14px; }
+  .cta { padding: 64px 20px; }
   .cta-t { font-size: clamp(32px, 10vw, 52px); }
+  .cta-row { flex-direction: column; align-items: center; gap: 12px; }
+  .cta-btn { width: 100%; max-width: 320px; padding: 16px 24px; min-width: 0; }
   .step { gap: 20px; }
   .step-n { width: 46px; height: 46px; min-width: 46px; font-size: 12px; }
+  .rmodal { padding: 32px 22px; }
+  .rmodal-t { font-size: 26px; }
+  .rfield-row { grid-template-columns: 1fr; gap: 0; }
 }
 </style>
 </head>
@@ -324,13 +365,110 @@ footer { background: #07101e; padding: 36px 40px; display: flex; justify-content
 <section class="cta" id="contact">
   <h2 class="cta-t">まずは話を聞きに来てください。</h2>
   <p class="cta-d">履歴書より先に、人を見たい。<br>気軽にお問い合わせください。</p>
-  <a href="/cdn-cgi/l/email-protection#0960676f66496c71686479656c276a6664" class="cta-btn">採用について問い合わせる</a>
+  <div class="cta-row">
+    <a href="https://lin.ee/OVSz7kO" target="_blank" rel="noopener" class="cta-btn cta-btn-line">
+      <span class="cta-btn-ico">💬</span><span class="cta-btn-lbl">LINEで相談する</span>
+    </a>
+    <a href="tel:09078995191" class="cta-btn cta-btn-tel">
+      <span class="cta-btn-ico">📞</span><span class="cta-btn-lbl">電話する<small>090-7899-5191</small></span>
+    </a>
+    <button type="button" class="cta-btn cta-btn-form" onclick="openRecruitForm()">
+      <span class="cta-btn-ico">📝</span><span class="cta-btn-lbl">フォームで送る</span>
+    </button>
+  </div>
 </section>
 
 <footer>
   <div class="footer-logo">TIRE MANAGER <span>f.o.o</span></div>
   <div class="footer-copy">© 有限会社 タイヤマネージャー フー. All rights reserved.</div>
 </footer>
+
+<!-- 採用フォーム モーダル -->
+<div class="rmodal-bg" id="recruit-modal" onclick="if(event.target===this)closeRecruitForm()">
+  <div class="rmodal">
+    <button type="button" class="rmodal-close" onclick="closeRecruitForm()" aria-label="閉じる">✕</button>
+    <h3 class="rmodal-t">採用についてのお問い合わせ</h3>
+    <p class="rmodal-d">必須項目だけでもOKです。気軽にお送りください。<br>担当より2営業日以内にご連絡します。</p>
+    <form id="recruit-form" onsubmit="return submitRecruit(event)">
+      <input type="text" name="_hp" class="rmodal-hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+      <div class="rfield">
+        <label>お名前<span class="req">*</span></label>
+        <input type="text" name="name" required maxlength="60" autocomplete="name" />
+      </div>
+      <div class="rfield">
+        <label>連絡先（電話 or メール、どちらかでOK）<span class="req">*</span></label>
+        <input type="text" name="contact" required maxlength="200" placeholder="例: 090-1234-5678 / your@example.com" />
+      </div>
+      <div class="rfield-row">
+        <div class="rfield">
+          <label>希望職種<span class="req">*</span></label>
+          <select name="jobPref" required>
+            <option value="">選んでください</option>
+            <option>現場作業</option>
+            <option>営業</option>
+            <option>事務</option>
+            <option>未定・相談したい</option>
+          </select>
+        </div>
+        <div class="rfield">
+          <label>希望勤務地<span class="req">*</span></label>
+          <select name="sitePref" required>
+            <option value="">選んでください</option>
+            <option>五日市</option>
+            <option>志和</option>
+            <option>どちらでも</option>
+          </select>
+        </div>
+      </div>
+      <div class="rfield-row">
+        <div class="rfield">
+          <label>年齢（任意）</label>
+          <input type="number" name="age" min="15" max="100" inputmode="numeric" />
+        </div>
+        <div class="rfield">
+          <label>入社希望時期（任意）</label>
+          <select name="timing">
+            <option value="">選んでください</option>
+            <option>すぐ</option>
+            <option>1〜3ヶ月</option>
+            <option>半年以内</option>
+            <option>未定</option>
+          </select>
+        </div>
+      </div>
+      <div class="rfield-row">
+        <div class="rfield">
+          <label>普通自動車免許（任意）</label>
+          <select name="license">
+            <option value="">選んでください</option>
+            <option>有</option>
+            <option>無</option>
+          </select>
+        </div>
+        <div class="rfield">
+          <label>知ったきっかけ（任意）</label>
+          <select name="source">
+            <option value="">選んでください</option>
+            <option>紹介</option>
+            <option>Web検索</option>
+            <option>SNS</option>
+            <option>求人サイト</option>
+            <option>その他</option>
+          </select>
+        </div>
+      </div>
+      <div class="rfield">
+        <label>メッセージ（任意）</label>
+        <textarea name="message" maxlength="2000" placeholder="質問、自己紹介、応募のきっかけなど、自由にどうぞ"></textarea>
+      </div>
+      <div id="rmodal-msg" class="rmodal-msg" style="display:none;"></div>
+      <div class="rmodal-actions">
+        <button type="button" class="rmodal-cancel" onclick="closeRecruitForm()">キャンセル</button>
+        <button type="submit" class="rmodal-submit" id="rmodal-submit-btn">送信する</button>
+      </div>
+    </form>
+  </div>
+</div>
 
 <script>
 (function() {
@@ -354,6 +492,58 @@ footer { background: #07101e; padding: 36px 40px; display: flex; justify-content
     });
   });
 })();
+
+// ===== 採用フォーム =====
+var RECRUIT_API = 'https://notion-proxy.33322666666mm.workers.dev/recruit-submit';
+
+function openRecruitForm() {
+  document.getElementById('recruit-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeRecruitForm() {
+  document.getElementById('recruit-modal').classList.remove('open');
+  document.body.style.overflow = '';
+  var msg = document.getElementById('rmodal-msg');
+  if (msg) msg.style.display = 'none';
+}
+async function submitRecruit(e) {
+  e.preventDefault();
+  var form = document.getElementById('recruit-form');
+  var btn = document.getElementById('rmodal-submit-btn');
+  var msg = document.getElementById('rmodal-msg');
+  msg.style.display = 'none';
+  btn.disabled = true;
+  btn.textContent = '送信中...';
+  var data = {};
+  new FormData(form).forEach(function(v, k) { data[k] = v; });
+  try {
+    var r = await fetch(RECRUIT_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    var j = await r.json().catch(function() { return {}; });
+    if (!r.ok || !j.ok) throw new Error(j.error || ('HTTP ' + r.status));
+    msg.className = 'rmodal-msg ok';
+    msg.textContent = '✓ 送信しました。担当より2営業日以内にご連絡します。';
+    msg.style.display = 'block';
+    form.reset();
+    btn.textContent = '送信する';
+    btn.disabled = false;
+    setTimeout(closeRecruitForm, 3800);
+  } catch (err) {
+    msg.className = 'rmodal-msg err';
+    msg.textContent = '送信に失敗しました。お電話 (090-7899-5191) かLINEからご連絡ください。エラー: ' + err.message;
+    msg.style.display = 'block';
+    btn.textContent = '送信する';
+    btn.disabled = false;
+  }
+  return false;
+}
+// ESC キーでモーダルを閉じる
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeRecruitForm();
+});
 </script>
 </body>
 </html>
