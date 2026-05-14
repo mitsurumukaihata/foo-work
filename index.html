@@ -46,6 +46,22 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .sec-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(36px,6vw,64px); line-height: 1.05; letter-spacing: 0.02em; margin-bottom: 24px; }
 .sec-body { font-size: 16px; line-height: 2.0; color: var(--gray-text); max-width: 600px; }
 
+/* ETHOS (Why we work) */
+.ethos { background: var(--cream); padding: 140px 40px; text-align: center; position: relative; overflow: hidden; }
+.ethos::before { content: ''; position: absolute; left: 50%; top: 0; width: 1px; height: 64px; background: var(--orange); transform: translateX(-50%); }
+.ethos-inner { max-width: 720px; margin: 0 auto; position: relative; }
+.ethos-label { font-size: 11px; font-weight: 500; letter-spacing: 0.3em; color: var(--orange); text-transform: uppercase; margin-bottom: 28px; }
+.ethos-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(44px,8vw,86px); color: var(--navy); letter-spacing: 0.04em; margin-bottom: 60px; line-height: 0.95; }
+.ethos-body { font-size: clamp(15px, 1.8vw, 18px); line-height: 2.3; color: var(--navy); font-weight: 300; }
+.ethos-body p { margin-bottom: 36px; }
+.ethos-body p:last-child { margin-bottom: 0; }
+.ethos-emp { font-weight: 500; position: relative; padding-top: 36px; color: var(--navy); }
+.ethos-emp::before { content: ''; display: block; width: 36px; height: 1px; background: var(--orange); margin: 0 auto 30px; }
+@media (max-width: 700px) {
+  .ethos { padding: 100px 24px; }
+  .ethos-body { line-height: 2.1; }
+}
+
 /* =============================================
    スライドインセクション
 ============================================= */
@@ -200,6 +216,18 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .cmodal-voice-q::before { content: '“'; font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: var(--orange); line-height: 0; vertical-align: -6px; margin-right: 4px; }
 .cmodal-voice-who { font-size: 11px; color: var(--gray-text); letter-spacing: 0.08em; }
 .cmodal-note { font-size: 12px; color: var(--gray-text); line-height: 1.8; padding: 12px 16px; background: rgba(232,96,10,0.06); border-radius: 0; margin-top: 14px; }
+.cmodal-loc { background: var(--white); padding: 18px 20px; margin-bottom: 16px; border-left: 3px solid var(--orange); }
+.cmodal-loc:last-child { margin-bottom: 0; }
+.cmodal-loc-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 4px; flex-wrap: wrap; }
+.cmodal-loc-name { font-size: 17px; font-weight: 700; color: var(--navy); letter-spacing: 0.02em; }
+.cmodal-loc-sub { font-size: 12px; color: var(--gray-text); margin-bottom: 8px; line-height: 1.7; }
+.cmodal-loc-addr { font-size: 13px; color: var(--navy); margin-bottom: 12px; line-height: 1.7; }
+.cmodal-loc-map { width: 100%; height: 200px; border: 0; display: block; background: var(--gray-light); }
+.cmodal-loc-open { font-size: 12px; color: var(--orange); text-decoration: none; letter-spacing: 0.04em; font-weight: 500; white-space: nowrap; }
+.cmodal-loc-open:hover { text-decoration: underline; }
+@media (max-width: 700px) {
+  .cmodal-loc-map { height: 180px; }
+}
 .cmodal-cta { display: inline-flex; align-items: center; gap: 12px; padding: 14px 28px; background: var(--orange); color: var(--white); text-decoration: none; font-size: 14px; font-weight: 500; letter-spacing: 0.08em; margin-top: 10px; }
 .cmodal-cta:hover { background: #c94e00; }
 .cmodal-cta::after { content: '→'; font-size: 18px; }
@@ -331,6 +359,18 @@ footer { background: #07101e; padding: 36px 40px; display: flex; justify-content
   <div class="hero-bg">TIRE</div>
 </section>
 
+<section class="ethos" id="ethos">
+  <div class="ethos-inner">
+    <div class="ethos-label">Why we work</div>
+    <h2 class="ethos-title">THE EVERYDAY.</h2>
+    <div class="ethos-body">
+      <p>食卓に届く食材も、<br>子どもが待つ家まで届く荷物も、<br>仕事を終えて家に帰る誰かの足取りも。</p>
+      <p>その「あたりまえ」の一歩手前に、<br>私たちが整えたタイヤがある。</p>
+      <p class="ethos-emp">関わるのはほんの一点。<br>でも、それは確かに、<br>誰かの一日を支える一点だ。</p>
+    </div>
+  </div>
+</section>
+
 <section class="features" id="features">
 
   <div class="feat" data-feat>
@@ -386,7 +426,7 @@ footer { background: #07101e; padding: 36px 40px; display: flex; justify-content
     <div class="cards">
       <div class="card" onclick="openCultureModal('gym')"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="8" width="3" height="8" rx="1"/><rect x="19" y="8" width="3" height="8" rx="1"/><rect x="6" y="11" width="12" height="2" rx="0.5"/><line x1="5" y1="9" x2="5" y2="15"/><line x1="19" y1="9" x2="19" y2="15"/></svg></div><div class="card-t">スポーツジム利用補助</div><p class="card-d">体が資本の仕事だからこそ、会社がジム代をサポート。代表が一番大事にしている福利厚生です。心身を整え、長く働ける環境を本気で作っています。</p><span class="card-more">詳しく見る →</span></div>
       <div class="card" onclick="openCultureModal('health')"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/></svg></div><div class="card-t">マッサージ・サプリ支給</div><p class="card-d">疲労回復のマッサージ補助と、必要なサプリメントを会社から支給。日々の体のメンテナンスも仕事のうちと考えています。</p><span class="card-more">詳しく見る →</span></div>
-      <div class="card" onclick="openCultureModal('loc')"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 7-8 13-8 13s-8-6-8-13a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></div><div class="card-t">2拠点・通いやすい環境</div><p class="card-d">五日市と志和、2つの拠点があります。住まいや生活スタイルに合わせて通える拠点で働けます。</p><span class="card-more">詳しく見る →</span></div>
+      <div class="card" onclick="openCultureModal('loc')"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 7-8 13-8 13s-8-6-8-13a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></div><div class="card-t">通いやすい環境</div><p class="card-d">五日市エリアの本社・整備工場と、東広島の志和倉庫。住まいや生活スタイルに合わせて、通いやすい拠点で働けます。</p><span class="card-more">詳しく見る →</span></div>
       <div class="card" onclick="openCultureModal('role')"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><div class="card-t">得意なことで活躍できる</div><p class="card-d">技術・営業・管理、それぞれに適した役割を一緒に探します。「なんでもやれ」ではなく「あなたに合った仕事を」。</p><span class="card-more">詳しく見る →</span></div>
     </div>
   </div>
@@ -597,12 +637,19 @@ var CULTURE_DATA = {
   },
   loc: {
     icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 7-8 13-8 13s-8-6-8-13a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>',
-    title: '2拠点・<br>通いやすい環境',
+    title: '通いやすい<br>環境',
     sections: [
-      { label: 'なぜ2拠点か', html: '<p>広島市内・東広島方面のお客様、両方をカバーするため、五日市と志和に拠点を置いています。</p><p>働く側にもメリットがあります。住んでいる場所・生活スタイル・配偶者の通勤事情——そういう「日々のリアル」に合わせて拠点を選べる方が、長く働けると考えているからです。</p>' },
-      { label: '拠点の場所', facts: [
-        { k: '五日市倉庫', v: '広島県広島市佐伯区千同3丁目394-1<br>市内のお客様中心。本社機能もここ' },
-        { k: '志和倉庫', v: '広島県東広島市方面<br>東広島・呉方面のお客様中心' },
+      { label: 'なぜ複数拠点か', html: '<p>広島市内・東広島方面のお客様、両エリアをカバーするため、五日市と志和に拠点があります。</p><p>働く側にもメリットがあります。住まい・生活スタイル・家庭の事情——そういう「日々のリアル」に合わせて拠点を選べる方が、長く働けると考えているからです。</p>' },
+      { label: '拠点案内', locations: [
+        { name: '本社', addr: '〒731-5141 広島県広島市佐伯区千同3丁目394-1', sub: '事務・営業・管理機能。お客様応対の中心',
+          embed: 'https://maps.google.com/maps?q=34.3805485,132.3485756&z=16&output=embed',
+          share: 'https://maps.app.goo.gl/wrkjq1j1Z1sU4G3L9' },
+        { name: '五日市工場', addr: '〒731-5141 広島県広島市佐伯区千同3丁目394-1（本社隣接）', sub: '整備・組替の中心拠点。市内のお客様向け作業',
+          embed: 'https://maps.google.com/maps?q=34.3805485,132.3485756&z=16&output=embed',
+          share: 'https://maps.app.goo.gl/5NJAsRXdp8VqRzar7' },
+        { name: '志和倉庫', addr: '〒739-0267 広島県東広島市志和流通', sub: '在庫拠点。東広島・呉方面のお客様向け',
+          embed: 'https://maps.google.com/maps?q=34.4647984,132.6456033&z=16&output=embed',
+          share: 'https://maps.app.goo.gl/4458TqP13PL7JpMGA' },
       ]},
       { label: '社員の声（仮）', voices: [
         { q: '東広島に引っ越したタイミングで志和勤務に変更してもらえた。通勤が片道15分に。', who: '現場 / 30代男性' },
@@ -652,6 +699,16 @@ function openCultureModal(key) {
     } else if (sec.voices) {
       sec.voices.forEach(function(v) {
         html += '<div class="cmodal-voice"><div class="cmodal-voice-q">' + v.q + '</div><div class="cmodal-voice-who">— ' + v.who + '</div></div>';
+      });
+    } else if (sec.locations) {
+      sec.locations.forEach(function(loc) {
+        html += '<div class="cmodal-loc">';
+        html += '<div class="cmodal-loc-head"><div class="cmodal-loc-name">' + loc.name + '</div>';
+        html += '<a class="cmodal-loc-open" href="' + loc.share + '" target="_blank" rel="noopener">Google Mapsで開く →</a></div>';
+        if (loc.sub) html += '<div class="cmodal-loc-sub">' + loc.sub + '</div>';
+        html += '<div class="cmodal-loc-addr">' + loc.addr + '</div>';
+        html += '<iframe class="cmodal-loc-map" src="' + loc.embed + '" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>';
+        html += '</div>';
       });
     }
     html += '</div>';
