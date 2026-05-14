@@ -157,16 +157,64 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 /* CULTURE */
 .culture { background: var(--cream); }
 .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 2px; margin-top: 60px; background: var(--gray-light); }
-.card { background: var(--white); padding: 36px 28px; transition: background 0.25s; }
+.card { background: var(--white); padding: 36px 28px; transition: background 0.25s; cursor: pointer; }
 .card:hover { background: var(--navy); }
 .card:hover .card-t { color: var(--white); }
 .card:hover .card-d { color: rgba(255,255,255,0.55); }
 .card:hover .card-icon { background: rgba(232,96,10,0.15); }
+.card:hover .card-more { color: var(--orange-light); }
 .card-icon { width: 46px; height: 46px; background: var(--cream); display: flex; align-items: center; justify-content: center; color: var(--navy); border-radius: 4px; margin-bottom: 20px; transition: background 0.25s, color 0.25s; }
 .card-icon svg { width: 24px; height: 24px; }
 .card:hover .card-icon { color: var(--orange); }
 .card-t { font-size: 16px; font-weight: 500; margin-bottom: 10px; transition: color 0.25s; }
-.card-d { font-size: 14px; line-height: 1.9; color: var(--gray-text); transition: color 0.25s; }
+.card-d { font-size: 14px; line-height: 1.9; color: var(--gray-text); transition: color 0.25s; margin-bottom: 16px; }
+.card-more { font-size: 12px; font-weight: 500; color: var(--orange); letter-spacing: 0.05em; transition: color 0.25s; display: inline-block; }
+
+/* CULTURE MODAL */
+.cmodal-bg { display: none; position: fixed; inset: 0; background: rgba(13,31,60,0.78); z-index: 200; align-items: flex-start; justify-content: center; overflow-y: auto; padding: 0; }
+.cmodal-bg.open { display: flex; }
+.cmodal { background: var(--cream); max-width: 720px; width: 100%; min-height: 100vh; position: relative; }
+.cmodal-hero { background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%); color: var(--cream); padding: 48px 40px 36px; position: relative; overflow: hidden; }
+.cmodal-hero::before { content: ''; position: absolute; top: -50%; right: -10%; width: 60%; height: 200%; background: radial-gradient(circle, rgba(232,96,10,0.18) 0%, transparent 60%); pointer-events: none; }
+.cmodal-hero-icon { width: 72px; height: 72px; background: rgba(255,255,255,0.08); border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; color: var(--orange-light); margin-bottom: 24px; position: relative; }
+.cmodal-hero-icon svg { width: 36px; height: 36px; }
+.cmodal-hero-label { font-size: 11px; font-weight: 500; letter-spacing: 0.25em; color: var(--orange-light); text-transform: uppercase; margin-bottom: 12px; position: relative; }
+.cmodal-hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(32px, 6vw, 52px); color: var(--white); letter-spacing: 0.02em; line-height: 1.05; position: relative; }
+.cmodal-close { position: absolute; top: 16px; right: 20px; background: rgba(255,255,255,0.1); border: 0; color: var(--white); width: 36px; height: 36px; border-radius: 50%; cursor: pointer; font-size: 18px; line-height: 1; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+.cmodal-close:hover { background: rgba(255,255,255,0.2); }
+.cmodal-body { padding: 40px; }
+.cmodal-sec { margin-bottom: 36px; }
+.cmodal-sec-label { font-size: 11px; font-weight: 500; letter-spacing: 0.22em; color: var(--orange); text-transform: uppercase; margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+.cmodal-sec-label::before { content: ''; width: 20px; height: 1px; background: var(--orange); }
+.cmodal-lead { font-size: 16px; line-height: 1.9; color: var(--navy); }
+.cmodal-lead p { margin-bottom: 14px; }
+.cmodal-lead p:last-child { margin-bottom: 0; }
+.cmodal-facts { display: grid; gap: 12px; }
+.cmodal-fact { display: flex; gap: 14px; padding: 14px 18px; background: var(--white); border-left: 3px solid var(--orange); }
+.cmodal-fact-k { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; color: var(--gray-text); text-transform: uppercase; min-width: 96px; flex-shrink: 0; padding-top: 2px; }
+.cmodal-fact-v { font-size: 15px; line-height: 1.7; color: var(--navy); flex: 1; }
+.cmodal-fact-v strong { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 0.04em; color: var(--orange); display: inline-block; line-height: 1; margin-right: 4px; }
+.cmodal-voice { background: var(--white); padding: 20px 22px; border-radius: 0; position: relative; margin-bottom: 14px; border-left: 3px solid var(--navy); }
+.cmodal-voice:last-child { margin-bottom: 0; }
+.cmodal-voice-q { font-size: 15px; line-height: 1.85; color: var(--navy); margin-bottom: 10px; }
+.cmodal-voice-q::before { content: '“'; font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: var(--orange); line-height: 0; vertical-align: -6px; margin-right: 4px; }
+.cmodal-voice-who { font-size: 11px; color: var(--gray-text); letter-spacing: 0.08em; }
+.cmodal-note { font-size: 12px; color: var(--gray-text); line-height: 1.8; padding: 12px 16px; background: rgba(232,96,10,0.06); border-radius: 0; margin-top: 14px; }
+.cmodal-cta { display: inline-flex; align-items: center; gap: 12px; padding: 14px 28px; background: var(--orange); color: var(--white); text-decoration: none; font-size: 14px; font-weight: 500; letter-spacing: 0.08em; margin-top: 10px; }
+.cmodal-cta:hover { background: #c94e00; }
+.cmodal-cta::after { content: '→'; font-size: 18px; }
+
+@media (max-width: 700px) {
+  .cmodal-hero { padding: 36px 24px 28px; }
+  .cmodal-hero-icon { width: 60px; height: 60px; }
+  .cmodal-hero-icon svg { width: 30px; height: 30px; }
+  .cmodal-close { top: 12px; right: 14px; }
+  .cmodal-body { padding: 28px 22px 60px; }
+  .cmodal-sec { margin-bottom: 28px; }
+  .cmodal-fact { flex-direction: column; gap: 4px; padding: 12px 14px; }
+  .cmodal-fact-k { min-width: 0; }
+  .cmodal-fact-v { font-size: 14px; }
+}
 
 /* MESSAGE */
 .message { background: var(--cream); }
@@ -336,10 +384,10 @@ footer { background: #07101e; padding: 36px 40px; display: flex; justify-content
     <div class="sec-label">Work culture</div>
     <h2 class="sec-title">働く環境と、<br>制度。</h2>
     <div class="cards">
-      <div class="card"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="8" width="3" height="8" rx="1"/><rect x="19" y="8" width="3" height="8" rx="1"/><rect x="6" y="11" width="12" height="2" rx="0.5"/><line x1="5" y1="9" x2="5" y2="15"/><line x1="19" y1="9" x2="19" y2="15"/></svg></div><div class="card-t">スポーツジム利用補助</div><p class="card-d">体が資本の仕事だからこそ、会社がジム代をサポート。代表が一番大事にしている福利厚生です。心身を整え、長く働ける環境を本気で作っています。</p></div>
-      <div class="card"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/></svg></div><div class="card-t">マッサージ・サプリ支給</div><p class="card-d">疲労回復のマッサージ補助と、必要なサプリメントを会社から支給。日々の体のメンテナンスも仕事のうちと考えています。</p></div>
-      <div class="card"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 7-8 13-8 13s-8-6-8-13a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></div><div class="card-t">2拠点・通いやすい環境</div><p class="card-d">五日市と志和、2つの拠点があります。住まいや生活スタイルに合わせて通える拠点で働けます。</p></div>
-      <div class="card"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><div class="card-t">得意なことで活躍できる</div><p class="card-d">技術・営業・管理、それぞれに適した役割を一緒に探します。「なんでもやれ」ではなく「あなたに合った仕事を」。</p></div>
+      <div class="card" onclick="openCultureModal('gym')"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="8" width="3" height="8" rx="1"/><rect x="19" y="8" width="3" height="8" rx="1"/><rect x="6" y="11" width="12" height="2" rx="0.5"/><line x1="5" y1="9" x2="5" y2="15"/><line x1="19" y1="9" x2="19" y2="15"/></svg></div><div class="card-t">スポーツジム利用補助</div><p class="card-d">体が資本の仕事だからこそ、会社がジム代をサポート。代表が一番大事にしている福利厚生です。心身を整え、長く働ける環境を本気で作っています。</p><span class="card-more">詳しく見る →</span></div>
+      <div class="card" onclick="openCultureModal('health')"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/></svg></div><div class="card-t">マッサージ・サプリ支給</div><p class="card-d">疲労回復のマッサージ補助と、必要なサプリメントを会社から支給。日々の体のメンテナンスも仕事のうちと考えています。</p><span class="card-more">詳しく見る →</span></div>
+      <div class="card" onclick="openCultureModal('loc')"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 7-8 13-8 13s-8-6-8-13a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></div><div class="card-t">2拠点・通いやすい環境</div><p class="card-d">五日市と志和、2つの拠点があります。住まいや生活スタイルに合わせて通える拠点で働けます。</p><span class="card-more">詳しく見る →</span></div>
+      <div class="card" onclick="openCultureModal('role')"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><div class="card-t">得意なことで活躍できる</div><p class="card-d">技術・営業・管理、それぞれに適した役割を一緒に探します。「なんでもやれ」ではなく「あなたに合った仕事を」。</p><span class="card-more">詳しく見る →</span></div>
     </div>
   </div>
 </section>
@@ -385,6 +433,19 @@ footer { background: #07101e; padding: 36px 40px; display: flex; justify-content
   <div class="footer-logo">TIRE MANAGER <span>f.o.o</span></div>
   <div class="footer-copy">© 有限会社 タイヤマネージャー フー. All rights reserved.</div>
 </footer>
+
+<!-- 制度・カルチャー モーダル (work culture cards) -->
+<div class="cmodal-bg" id="culture-modal" onclick="if(event.target===this)closeCultureModal()">
+  <div class="cmodal">
+    <div class="cmodal-hero">
+      <button type="button" class="cmodal-close" onclick="closeCultureModal()" aria-label="閉じる">✕</button>
+      <div class="cmodal-hero-icon" id="cmodal-icon"></div>
+      <div class="cmodal-hero-label" id="cmodal-label">Work culture</div>
+      <h2 class="cmodal-hero-title" id="cmodal-title"></h2>
+    </div>
+    <div class="cmodal-body" id="cmodal-body"></div>
+  </div>
+</div>
 
 <!-- 採用フォーム モーダル -->
 <div class="rmodal-bg" id="recruit-modal" onclick="if(event.target===this)closeRecruitForm()">
@@ -496,6 +557,119 @@ footer { background: #07101e; padding: 36px 40px; display: flex; justify-content
   });
 })();
 
+// ===== 制度モーダル（work cultureカード） =====
+var CULTURE_DATA = {
+  gym: {
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="8" width="3" height="8" rx="1"/><rect x="19" y="8" width="3" height="8" rx="1"/><rect x="6" y="11" width="12" height="2" rx="0.5"/><line x1="5" y1="9" x2="5" y2="15"/><line x1="19" y1="9" x2="19" y2="15"/></svg>',
+    title: 'スポーツジム<br>利用補助',
+    sections: [
+      { label: '代表からの想い', html: '<p>タイヤ交換は重いタイヤを毎日扱う仕事です。腰・膝・肩を痛める社員を、私も何人も見てきました。だからこそ「健康への投資」は会社の責任だと考えています。</p><p>体を整えて、長く・元気に・誇りを持って働ける——そのための土台がジム制度です。私が一番大事にしている福利厚生です。</p>' },
+      { label: '制度の中身', facts: [
+        { k: '補助額', v: '<strong>7,700</strong>円 / 月' },
+        { k: '対象', v: '全社員（試用期間後）' },
+        { k: '使い方', v: '月会費でも都度払いでもOK。施設は自由に選べます' },
+        { k: '組合せ', v: 'マッサージ・サプリと枠を分けて使うこともできます（同じ補助枠を使用）' },
+      ]},
+      { label: '社員の声（仮）', voices: [
+        { q: '腰を痛めないために、シフト前のストレッチ＋週2でジム通い。仕事中の動きが変わりました。', who: '現場 / 30代男性' },
+        { q: '会社が補助してくれるので「やらなきゃ」って気持ちになる。1人だと続かなかったと思う。', who: '現場 / 20代男性' },
+      ]},
+    ],
+    note: '※具体的な利用方法は入社後にご案内します。「ジム探しから一緒に」もOKです。',
+  },
+  health: {
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/></svg>',
+    title: 'マッサージ・<br>サプリ支給',
+    sections: [
+      { label: '代表からの想い', html: '<p>「健康への投資」はジムだけじゃありません。マッサージで疲れを抜く、サプリで足りない栄養を補う——どれも、明日も現場に立つための立派なケアです。</p><p>毎日体を使う仕事だからこそ、自分の身体への投資を当たり前にしてほしい。そのための制度です。</p>' },
+      { label: '制度の中身', facts: [
+        { k: '補助額', v: '<strong>7,700</strong>円 / 月（ジム枠と共通）' },
+        { k: '対象', v: '全社員（試用期間後）' },
+        { k: '使い道', v: 'マッサージ施術費 / プロテイン・サプリの購入費' },
+        { k: '対象例', v: '整体・もみほぐし・接骨院・関節サプリ・プロテイン・ビタミン剤など' },
+      ]},
+      { label: '社員の声（仮）', voices: [
+        { q: '肩甲骨周りをしっかりほぐしてもらえる店を、補助の範囲で月1〜2回。次の日が全然違います。', who: '現場 / 40代男性' },
+        { q: 'プロテインを毎月買えるのが地味にありがたい。体重が減らなくなりました。', who: '現場 / 20代男性' },
+      ]},
+    ],
+    note: '※ジムを使わない月は、その分マッサージ・サプリに回せます。組合せ自由。',
+  },
+  loc: {
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 7-8 13-8 13s-8-6-8-13a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>',
+    title: '2拠点・<br>通いやすい環境',
+    sections: [
+      { label: 'なぜ2拠点か', html: '<p>広島市内・東広島方面のお客様、両方をカバーするため、五日市と志和に拠点を置いています。</p><p>働く側にもメリットがあります。住んでいる場所・生活スタイル・配偶者の通勤事情——そういう「日々のリアル」に合わせて拠点を選べる方が、長く働けると考えているからです。</p>' },
+      { label: '拠点の場所', facts: [
+        { k: '五日市倉庫', v: '広島県広島市佐伯区千同3丁目394-1<br>市内のお客様中心。本社機能もここ' },
+        { k: '志和倉庫', v: '広島県東広島市方面<br>東広島・呉方面のお客様中心' },
+      ]},
+      { label: '社員の声（仮）', voices: [
+        { q: '東広島に引っ越したタイミングで志和勤務に変更してもらえた。通勤が片道15分に。', who: '現場 / 30代男性' },
+        { q: '子どもの送り迎えで時間が読める拠点に異動した。働き方の融通がきく会社です。', who: '事務 / 30代女性' },
+      ]},
+    ],
+    note: '※拠点間の異動は「家庭の都合」「キャリアアップのため」どちらでも遠慮なくご相談ください。',
+  },
+  role: {
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',
+    title: '得意なことで<br>活躍できる',
+    sections: [
+      { label: '代表からの想い', html: '<p>8年前、事務も営業も現場も全部ひとりでやっていました。そのときわかったのは、人によって「輝く場所」が違うということです。</p><p>同じタイヤ屋でも、技術を極める人、お客さんとの関係を作る人、後輩を育てる人、数字で会社を支える人——みんな違います。だから「なんでもやれ」ではなく、「あなたに合った仕事を一緒に探す」会社にしています。</p>' },
+      { label: '活躍のかたち（一例）', facts: [
+        { k: '技術タイプ', v: '現場リーダー / 教育担当 / 難易度の高い車種を任される' },
+        { k: '営業タイプ', v: 'ルート営業 / 新規開拓 / お客様窓口' },
+        { k: '管理タイプ', v: '在庫管理 / 経理サポート / 事務統括' },
+        { k: '挑戦タイプ', v: '新規事業 / SNS発信 / 改善プロジェクトの立ち上げ' },
+      ]},
+      { label: '社員の声（仮）', voices: [
+        { q: '人と話すのが好きだと気づいて、現場から営業に移ったらハマった。給料も上がりました。', who: '営業 / 30代男性' },
+        { q: '「数字を見るのが好き」と話したら、経理周りを任せてもらえた。これが私の天職だと思う。', who: '事務 / 30代女性' },
+      ]},
+    ],
+    note: '※「自分の得意がまだわからない」人も大歓迎です。現場で働きながら一緒に見つけていきましょう。',
+  },
+};
+
+function openCultureModal(key) {
+  var data = CULTURE_DATA[key];
+  if (!data) return;
+  document.getElementById('cmodal-icon').innerHTML = data.icon;
+  document.getElementById('cmodal-title').innerHTML = data.title;
+  var bodyEl = document.getElementById('cmodal-body');
+  var html = '';
+  data.sections.forEach(function(sec) {
+    html += '<div class="cmodal-sec">';
+    html += '<div class="cmodal-sec-label">' + sec.label + '</div>';
+    if (sec.html) {
+      html += '<div class="cmodal-lead">' + sec.html + '</div>';
+    } else if (sec.facts) {
+      html += '<div class="cmodal-facts">';
+      sec.facts.forEach(function(f) {
+        html += '<div class="cmodal-fact"><div class="cmodal-fact-k">' + f.k + '</div><div class="cmodal-fact-v">' + f.v + '</div></div>';
+      });
+      html += '</div>';
+    } else if (sec.voices) {
+      sec.voices.forEach(function(v) {
+        html += '<div class="cmodal-voice"><div class="cmodal-voice-q">' + v.q + '</div><div class="cmodal-voice-who">— ' + v.who + '</div></div>';
+      });
+    }
+    html += '</div>';
+  });
+  if (data.note) {
+    html += '<div class="cmodal-note">' + data.note + '</div>';
+  }
+  html += '<div style="margin-top:32px;text-align:center;"><a href="#contact" class="cmodal-cta" onclick="closeCultureModal()">この制度がある会社で働く</a></div>';
+  bodyEl.innerHTML = html;
+  document.getElementById('culture-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  bodyEl.parentElement.scrollTop = 0;
+}
+function closeCultureModal() {
+  document.getElementById('culture-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
 // ===== 採用フォーム =====
 var RECRUIT_API = 'https://notion-proxy.33322666666mm.workers.dev/recruit-submit';
 
@@ -545,7 +719,7 @@ async function submitRecruit(e) {
 }
 // ESC キーでモーダルを閉じる
 document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') closeRecruitForm();
+  if (e.key === 'Escape') { closeRecruitForm(); closeCultureModal(); }
 });
 </script>
 </body>
