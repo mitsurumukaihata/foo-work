@@ -260,6 +260,31 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .card-d { font-size: 14px; line-height: 1.9; color: var(--gray-text); transition: color 0.25s; margin-bottom: 16px; }
 .card-more { font-size: 12px; font-weight: 500; color: var(--orange); letter-spacing: 0.05em; transition: color 0.25s; display: inline-block; }
 
+/* JOB OPENINGS (募集要項) */
+.recruit-info { background: var(--white); }
+.recruit-info .cards { background: var(--gray-light); }
+.recruit-card { background: var(--cream); padding: 32px 28px; position: relative; }
+.recruit-card .recruit-type { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; padding: 4px 10px; border-radius: 0; margin-bottom: 20px; transition: background 0.25s, color 0.25s; }
+.recruit-card .recruit-type.full { background: var(--navy); color: var(--white); }
+.recruit-card .recruit-type.part { background: var(--orange); color: var(--white); }
+.recruit-card .recruit-title { font-size: 17px; font-weight: 500; line-height: 1.5; margin-bottom: 14px; color: var(--navy); transition: color 0.25s; }
+.recruit-card .recruit-salary { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 0.03em; color: var(--orange); margin-bottom: 6px; line-height: 1.1; transition: color 0.25s; }
+.recruit-card .recruit-salary-sub { font-size: 11px; color: var(--gray-text); margin-bottom: 18px; transition: color 0.25s; }
+.recruit-card .recruit-desc { font-size: 13px; line-height: 1.85; color: var(--gray-text); margin-bottom: 18px; transition: color 0.25s; }
+.recruit-card:hover { background: var(--navy); }
+.recruit-card:hover .recruit-title { color: var(--white); }
+.recruit-card:hover .recruit-salary { color: var(--orange-light); }
+.recruit-card:hover .recruit-salary-sub { color: rgba(255,255,255,0.5); }
+.recruit-card:hover .recruit-desc { color: rgba(255,255,255,0.6); }
+.recruit-card:hover .recruit-type.full { background: var(--orange); }
+.recruit-card:hover .card-more { color: var(--orange-light); }
+.recruit-card .card-more { font-size: 12px; font-weight: 500; color: var(--orange); letter-spacing: 0.05em; transition: color 0.25s; display: inline-block; }
+
+/* JobModal 内の type/salary 表示 */
+.cmodal-job-type { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; padding: 4px 12px; margin-bottom: 14px; }
+.cmodal-job-type.full { background: rgba(255,255,255,0.15); color: var(--orange-light); }
+.cmodal-job-type.part { background: var(--orange); color: var(--white); }
+
 /* CULTURE MODAL */
 .cmodal-bg { display: none; position: fixed; inset: 0; background: rgba(13,31,60,0.78); z-index: 200; align-items: flex-start; justify-content: center; overflow-y: auto; padding: 0; }
 .cmodal-bg.open { display: flex; }
@@ -423,8 +448,9 @@ footer { background: #07101e; padding: 36px 40px; display: flex; justify-content
     <li><a href="#features">仕事について</a></li>
     <li><a href="#career">キャリア</a></li>
     <li><a href="#culture">環境・制度</a></li>
+    <li><a href="#recruit">募集要項</a></li>
     <li><a href="#message">代表メッセージ</a></li>
-    <li><a href="#contact">採用情報</a></li>
+    <li><a href="#contact">お問い合わせ</a></li>
   </ul>
 </nav>
 
@@ -508,6 +534,40 @@ footer { background: #07101e; padding: 36px 40px; display: flex; justify-content
       <div class="card" data-anim data-d="3" onclick="openCultureModal('health')"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/></svg></div><div class="card-t">マッサージ・サプリ支給</div><p class="card-d">疲労回復のマッサージ補助と、必要なサプリメントを会社から支給。日々の体のメンテナンスも仕事のうちと考えています。</p><span class="card-more">詳しく見る →</span></div>
       <div class="card" data-anim data-d="4" onclick="openCultureModal('loc')"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 7-8 13-8 13s-8-6-8-13a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></div><div class="card-t">通いやすい環境</div><p class="card-d">五日市エリアの本社・整備工場と、東広島の志和倉庫。住まいや生活スタイルに合わせて、通いやすい拠点で働けます。</p><span class="card-more">詳しく見る →</span></div>
       <div class="card" data-anim data-d="5" onclick="openCultureModal('role')"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><div class="card-t">得意なことで活躍できる</div><p class="card-d">技術・営業・管理、それぞれに適した役割を一緒に探します。「なんでもやれ」ではなく「あなたに合った仕事を」。</p><span class="card-more">詳しく見る →</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec recruit-info" id="recruit" data-feat>
+  <div class="container">
+    <div class="sec-label" data-anim data-d="1">Job openings</div>
+    <div data-mask><h2 class="sec-title">募集中の、<br><span class="hl">3つのポジション。</span></h2></div>
+    <p class="sec-body" data-anim data-d="2">給与・勤務条件・福利厚生をまとめました。カードをタップすると、各ポジションの詳細が見られます。</p>
+    <div class="cards" style="margin-top:50px;">
+      <div class="card recruit-card" data-anim data-d="3" onclick="openCultureModal('job_field')">
+        <span class="recruit-type full">正社員</span>
+        <div class="recruit-title">出張タイヤ交換<br>サービススタッフ</div>
+        <div class="recruit-salary">¥250,000〜¥350,000</div>
+        <div class="recruit-salary-sub">月給 / 賞与年2回 / 諸手当別</div>
+        <p class="recruit-desc">広島県内の物流現場へ出張してタイヤ交換・点検作業。トラック・バンが中心。LPで言う「あたりまえの物流を支える」メインのポジションです。</p>
+        <span class="card-more">詳しく見る →</span>
+      </div>
+      <div class="card recruit-card" data-anim data-d="4" onclick="openCultureModal('job_assist')">
+        <span class="recruit-type full">正社員</span>
+        <div class="recruit-title">タイヤ交換サービス<br>アシスタントスタッフ</div>
+        <div class="recruit-salary">¥230,000〜¥330,000</div>
+        <div class="recruit-salary-sub">月給 / 賞与年2回 / 諸手当別</div>
+        <p class="recruit-desc">五日市拠点で出張スタッフのサポートと倉庫内作業。お客様応対や受発注も。現場経験を積みながら、徐々に出張作業にも参加していくキャリアです。</p>
+        <span class="card-more">詳しく見る →</span>
+      </div>
+      <div class="card recruit-card" data-anim data-d="5" onclick="openCultureModal('job_ec')">
+        <span class="recruit-type part">パート</span>
+        <div class="recruit-title">中古タイヤEC・<br>SNS運営スタッフ</div>
+        <div class="recruit-salary">¥1,050〜<span style="font-size:14px;letter-spacing:0;">/時</span></div>
+        <div class="recruit-salary-sub">時給 / 諸手当別</div>
+        <p class="recruit-desc">志和拠点で中古タイヤのオークション出品、SNS投稿、商品撮影、お問合せ対応。タイヤ業界経験は不問、PC・スマホの基本操作ができる方歓迎。</p>
+        <span class="card-more">詳しく見る →</span>
+      </div>
     </div>
   </div>
 </section>
@@ -758,6 +818,88 @@ var CULTURE_DATA = {
     ],
     note: '※「自分の得意がまだわからない」人も大歓迎です。現場で働きながら一緒に見つけていきましょう。',
   },
+
+  // ===== 募集要項 (Job openings) =====
+  job_field: {
+    topLabel: 'Job openings',
+    ctaText: 'このポジションに応募する',
+    jobType: 'full',
+    jobTypeLabel: '正社員',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>',
+    title: '出張タイヤ交換<br>サービススタッフ',
+    sections: [
+      { label: '業務内容', html: '<p>広島県内の物流現場（運送会社・工場・倉庫など）へ出張してタイヤ交換・点検を行います。トラック・バンが中心。季節タイヤ交換、緊急対応など。基本は1日数件の現場を回ります。</p><p>1人で出張するわけではなく、必ずチームでの行動。先輩との並走時間をしっかり取り、未経験でも安心して始められる体制です。</p>' },
+      { label: '給与・賞与', facts: [
+        { k: '月給', v: '<strong>250,000</strong>円 〜 <strong>350,000</strong>円 <small style="font-size:11px;font-family:inherit;color:var(--gray-text);">(経験・年齢を考慮して決定)</small>' },
+        { k: '賞与', v: '年2回' },
+        { k: '諸手当', v: '通勤手当 / 家族手当' },
+        { k: '試用期間', v: '6ヶ月（給与・条件は本採用と同じ）' },
+        { k: '昇給', v: 'スキルアップに応じて' },
+      ]},
+      { label: '勤務条件', facts: [
+        { k: '勤務時間', v: '9:00 〜 18:00（休憩60分）' },
+        { k: '休日', v: '日曜・祝日 / 年間休日 <strong>105</strong>日' },
+        { k: '勤務地', v: '五日市 or 志和（住まいや事情を相談しながら決定）' },
+        { k: '残業', v: '通常は抑える方針。繁忙期（3・4・11・12月）は依頼することがあります' },
+      ]},
+      { label: '応募要件', html: '<p>普通自動車免許（必須）／ 未経験歓迎 ／ 体力に自信のある方<br>大型・中型・フォークリフト等の資格は <strong>会社負担で取得支援</strong> あり</p>' },
+      { label: '福利厚生', html: '<p>社会保険完備（健康・厚生年金・雇用・労災）／ 健康サポート補助 <strong>月7,700円</strong>（ジム・マッサージ・サプリ等で自由に消化可）／ 資格取得支援制度 ／ 育児両立支援</p>' },
+    ],
+    note: '※詳細条件・配属拠点は面談時にすり合わせます。気軽にお問い合わせください。',
+  },
+
+  job_assist: {
+    topLabel: 'Job openings',
+    ctaText: 'このポジションに応募する',
+    jobType: 'full',
+    jobTypeLabel: '正社員',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>',
+    title: 'タイヤ交換サービス<br>アシスタントスタッフ',
+    sections: [
+      { label: '業務内容', html: '<p>五日市拠点で出張スタッフのサポートと、倉庫内のタイヤ管理・お客様応対・受発注などを担当します。電話・メール・LINEでの問い合わせ対応も。</p><p>現場経験を積みながら、徐々に出張作業へも参加していくキャリアパス。「いきなり1人で出張は不安」という方に向いています。</p>' },
+      { label: '給与・賞与', facts: [
+        { k: '月給', v: '<strong>230,000</strong>円 〜 <strong>330,000</strong>円 <small style="font-size:11px;font-family:inherit;color:var(--gray-text);">(経験・年齢を考慮して決定)</small>' },
+        { k: '賞与', v: '年2回' },
+        { k: '諸手当', v: '通勤手当 / 家族手当' },
+        { k: '試用期間', v: '6ヶ月（給与・条件は本採用と同じ）' },
+        { k: '昇給', v: 'スキルアップに応じて' },
+      ]},
+      { label: '勤務条件', facts: [
+        { k: '勤務時間', v: '9:00 〜 18:00（休憩60分）' },
+        { k: '休日', v: '日曜・祝日 / 年間休日 <strong>105</strong>日' },
+        { k: '勤務地', v: '五日市（西広島バイパス五日市降り口から車で5分）' },
+        { k: '残業', v: '通常は抑える方針。繁忙期（3・4・11・12月）は依頼することがあります' },
+      ]},
+      { label: '応募要件', html: '<p>普通自動車免許（推奨）／ 未経験歓迎 ／ チームで動くのが好きな方<br>パソコン・スマホの基本操作ができれば十分です</p>' },
+      { label: '福利厚生', html: '<p>社会保険完備（健康・厚生年金・雇用・労災）／ 健康サポート補助 <strong>月7,700円</strong>（ジム・マッサージ・サプリ等で自由に消化可）／ 資格取得支援制度 ／ 育児両立支援</p>' },
+    ],
+    note: '※業務範囲は適性を見ながら相談して決めていきます。',
+  },
+
+  job_ec: {
+    topLabel: 'Job openings',
+    ctaText: 'このポジションに応募する',
+    jobType: 'part',
+    jobTypeLabel: 'パート',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>',
+    title: '中古タイヤEC・<br>SNS運営スタッフ',
+    sections: [
+      { label: '業務内容', html: '<p>志和拠点で、中古タイヤのオークション出品作業、Instagram・X 等のSNS投稿、商品写真の撮影、お客様からの問い合わせ対応など。</p><p>タイヤ業界の知識は不要。「パソコン・スマホで何かを作るのが好き」「SNSに慣れている」「コツコツ作業が得意」な方に向いています。</p>' },
+      { label: '給与', facts: [
+        { k: '時給', v: '<strong>1,050</strong>円 〜 <small style="font-size:11px;font-family:inherit;color:var(--gray-text);">(経験・スキルに応じて)</small>' },
+        { k: '諸手当', v: '通勤手当' },
+        { k: '試用期間', v: '6ヶ月（時給・条件は本採用と同じ）' },
+      ]},
+      { label: '勤務条件', facts: [
+        { k: '勤務時間', v: '応相談（週○日／1日○時間から）<small style="font-size:11px;font-family:inherit;color:var(--gray-text);">家庭の事情に合わせて調整可</small>' },
+        { k: '休日', v: '応相談（基本は日祝休み）' },
+        { k: '勤務地', v: '志和（志和ICから車で2分）' },
+      ]},
+      { label: '応募要件', html: '<p>PC・スマホの基本操作ができる方／ SNS（Instagram・X等）の閲覧経験ある方歓迎<br>未経験OK、研修あり</p>' },
+      { label: '福利厚生', html: '<p>雇用保険・労災保険／ 有給休暇 法定通り／ 一定条件で社会保険加入可</p>' },
+    ],
+    note: '※勤務時間・日数は面談で相談しましょう。「子どもの送り迎えがある」「Wワーク希望」なども遠慮なく。',
+  },
 };
 
 function openCultureModal(key) {
@@ -768,9 +910,15 @@ function openCultureModal(key) {
   modal.classList.remove('in-view');
   document.getElementById('cmodal-icon').innerHTML = data.icon;
   document.getElementById('cmodal-title').innerHTML = data.title;
+  // ヒーローのトップラベル (Work culture / Job openings) を動的にセット
+  document.getElementById('cmodal-label').textContent = data.topLabel || 'Work culture';
   var bodyEl = document.getElementById('cmodal-body');
   var html = '';
-  var di = 3; // hero icon=1, label=2, title=mask. 本文セクションは d=3 から
+  // 求人ポジションは雇用形態バッジを先頭に表示
+  if (data.jobType && data.jobTypeLabel) {
+    html += '<div class="cmodal-sec" data-anim data-d="3" style="margin-bottom:8px;"><span class="cmodal-job-type ' + data.jobType + '">' + data.jobTypeLabel + '</span></div>';
+  }
+  var di = data.jobType ? 4 : 3; // hero icon=1, label=2, title=mask, jobType=3 (if present)
   data.sections.forEach(function(sec) {
     html += '<div class="cmodal-sec" data-anim data-d="' + (di++) + '">';
     html += '<div class="cmodal-sec-label">' + sec.label + '</div>';
@@ -802,7 +950,8 @@ function openCultureModal(key) {
   if (data.note) {
     html += '<div class="cmodal-note" data-anim data-d="' + (di++) + '">' + data.note + '</div>';
   }
-  html += '<div data-anim data-d="' + (di++) + '" style="margin-top:32px;text-align:center;"><a href="#contact" class="cmodal-cta" onclick="closeCultureModal()">この制度がある会社で働く</a></div>';
+  var ctaText = data.ctaText || 'この制度がある会社で働く';
+  html += '<div data-anim data-d="' + (di++) + '" style="margin-top:32px;text-align:center;"><a href="#contact" class="cmodal-cta" onclick="closeCultureModal()">' + ctaText + '</a></div>';
   bodyEl.innerHTML = html;
   modal.classList.add('open');
   document.body.style.overflow = 'hidden';
