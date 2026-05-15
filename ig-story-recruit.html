@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080, initial-scale=0.4">
+<title>IGストーリー / 求人 — Tire Manager f.o.o</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html, body { background:#101010; font-family:'Noto Sans JP', sans-serif; -webkit-font-smoothing:antialiased; }
+body { display:flex; flex-direction:column; align-items:center; min-height:100vh; padding:24px 0; }
+
+/* ── 操作ヒント（スクショ範囲外） ── */
+.tip {
+  width: min(1080px, 100vw);
+  padding: 20px 32px;
+  color: #ddd;
+  font-size: 24px;
+  line-height: 1.7;
+  background: #1a1a1a;
+  border-left: 4px solid #e8600a;
+  margin-bottom: 24px;
+}
+.tip strong { color: #f5a05a; }
+.tip code { background: #333; padding: 2px 8px; color: #f5a05a; font-family: monospace; }
+.tip small { color: #888; font-size: 19px; }
+
+/* ── IGストーリー本体 (1080 × 1920) ── */
+.frame {
+  width: 1080px;
+  height: 1920px;
+  background: #0d1f3c;
+  color: #fff;
+  padding: 130px 100px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+}
+/* 微妙なノイズ感（ベタっと感を防ぐ） */
+.frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at top right, rgba(232,96,10,0.08) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+.accent-top { position:absolute; top:80px; left:100px; width:96px; height:4px; background:#e8600a; }
+
+.top { display:flex; flex-direction:column; gap:30px; margin-top:50px; position:relative; z-index:1; }
+.brand { font-family:'Bebas Neue', sans-serif; font-size:46px; letter-spacing:0.14em; color:rgba(255,255,255,0.92); }
+.brand span { color:#e8600a; }
+.eyebrow { font-size:28px; letter-spacing:0.32em; color:rgba(255,255,255,0.45); text-transform:uppercase; font-weight:500; }
+
+.main { flex:1; display:flex; flex-direction:column; justify-content:center; margin:50px 0; position:relative; z-index:1; }
+.main h1 { font-size:90px; font-weight:700; line-height:1.55; margin:0 0 14px 0; letter-spacing:-0.02em; }
+.main h1:last-of-type { margin-bottom:0; }
+.divider { margin:68px 0 56px; font-size:54px; color:#f5a05a; font-weight:500; line-height:1.4; }
+
+.job-info { font-size:50px; line-height:1.7; font-weight:500; color:rgba(255,255,255,0.92); }
+.job-info .salary { display:block; font-family:'Bebas Neue', sans-serif; font-size:78px; letter-spacing:0.04em; color:#f5a05a; line-height:1.1; margin-top:18px; }
+.job-info .meta { display:block; font-size:36px; color:rgba(255,255,255,0.55); margin-top:8px; letter-spacing:0.04em; }
+
+.bottom { display:flex; flex-direction:column; gap:20px; padding-bottom:24px; position:relative; z-index:1; }
+.bottom-accent { width:60px; height:3px; background:#e8600a; }
+.cta { font-size:42px; color:rgba(255,255,255,0.58); font-weight:500; letter-spacing:0.04em; }
+</style>
+</head>
+<body>
+
+<div class="tip">
+  <strong>IGストーリー プレビュー</strong>　1080 × 1920 (9:16)<br>
+  <small>
+    ・PCでフルサイズ保存：Chrome <code>F12</code> → 右上「⋮」→ <strong>「ノードのスクリーンショットをキャプチャ」</strong>を<code>.frame</code>要素で実行<br>
+    ・もしくは：このフレーム部分をスクショして9:16にトリミング → そのままIGストーリーへアップ<br>
+    ・スマホで開いてる場合：スクショ → IGストーリー編集で9:16にトリミング
+  </small>
+</div>
+
+<div class="frame">
+  <div class="accent-top"></div>
+
+  <div class="top">
+    <div class="brand">TIRE MANAGER <span>f.o.o</span></div>
+    <div class="eyebrow">Job Opening · 求人募集</div>
+  </div>
+
+  <div class="main">
+    <h1>ジム代、会社負担。</h1>
+    <h1>有給は、時間単位でOK。</h1>
+    <h1>資格は、会社が取らせる。</h1>
+    <div class="divider">———— そんなタイヤ屋。</div>
+    <div class="job-info">
+      出張サービス・正社員 / 志和拠点
+      <span class="salary">月給 ¥270,000〜¥370,000</span>
+      <span class="meta">賞与 年2回 / 年間休日 105日</span>
+    </div>
+  </div>
+
+  <div class="bottom">
+    <div class="bottom-accent"></div>
+    <div class="cta">→ プロフィールリンクから詳細を見る</div>
+  </div>
+</div>
+
+</body>
+</html>
