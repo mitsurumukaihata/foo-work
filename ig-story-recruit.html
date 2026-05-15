@@ -39,24 +39,24 @@ body { display:flex; flex-direction:column; align-items:center; min-height:100vh
   flex-direction: column;
   justify-content: space-between;
   box-shadow: 0 24px 80px rgba(0,0,0,0.5);
-  /* 背景画像 + ネイビーグラデオーバーレイ */
+  /* 背景画像 + ネイビーグラデオーバーレイ (実写の作業風景に合わせて調整) */
   background:
-    linear-gradient(95deg,
-      rgba(13,31,60,0.95) 0%,
-      rgba(13,31,60,0.88) 28%,
-      rgba(13,31,60,0.60) 50%,
-      rgba(13,31,60,0.30) 72%,
-      rgba(13,31,60,0.10) 100%
+    linear-gradient(105deg,
+      rgba(13,31,60,0.92) 0%,
+      rgba(13,31,60,0.82) 30%,
+      rgba(13,31,60,0.55) 55%,
+      rgba(13,31,60,0.30) 78%,
+      rgba(13,31,60,0.15) 100%
     ),
-    url('images/ig-gym.jpg') no-repeat right center / cover;
+    url('images/ig-recruit.jpg') no-repeat center center / cover;
   background-color: #0d1f3c; /* 画像読込前のフォールバック */
 }
-/* 微妙なノイズ感（ベタっと感を防ぐ） */
+/* 微妙なオレンジ光 (温かみ) */
 .frame::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at top left, rgba(232,96,10,0.10) 0%, transparent 50%);
+  background: radial-gradient(ellipse at top right, rgba(232,96,10,0.08) 0%, transparent 55%);
   pointer-events: none;
 }
 
