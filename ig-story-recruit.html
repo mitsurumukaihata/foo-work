@@ -149,7 +149,7 @@ body { display:flex; flex-direction:column; align-items:center; min-height:100vh
   line-height: 1.6;
 }
 
-/* ── 下部 ── */
+/* ── 下部 (CTAリンクボタン) ── */
 .bottom {
   margin-top: 36px;
   padding-bottom: 8px;
@@ -157,15 +157,48 @@ body { display:flex; flex-direction:column; align-items:center; min-height:100vh
   z-index: 1;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 18px;
 }
-.bottom-accent { width: 56px; height: 3px; background:#e8600a; }
-.cta {
-  font-size: 32px;
-  color: rgba(255,255,255,0.78);
+.cta-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  background: #e8600a;
+  color: #fff;
+  padding: 28px 44px;
+  font-size: 38px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  box-shadow: 0 12px 32px rgba(232, 96, 10, 0.42), 0 4px 12px rgba(0,0,0,0.3);
+  align-self: stretch;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px rgba(232, 96, 10, 0.55), 0 6px 16px rgba(0,0,0,0.35);
+}
+.cta-button::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 8px;
+  background: rgba(255,255,255,0.25);
+}
+.cta-button-text { display: flex; flex-direction: column; gap: 4px; padding-left: 16px; }
+.cta-button-label { font-size: 18px; letter-spacing: 0.32em; opacity: 0.85; font-weight: 500; text-transform: uppercase; }
+.cta-button-main { font-size: 42px; font-weight: 700; letter-spacing: 0.04em; }
+.cta-button-arrow { font-family: 'Bebas Neue', sans-serif; font-size: 64px; font-weight: 400; line-height: 1; opacity: 0.92; }
+.cta-sub {
+  font-size: 22px;
+  color: rgba(255,255,255,0.5);
   font-weight: 500;
   letter-spacing: 0.06em;
-  text-shadow: 0 2px 12px rgba(0,0,0,0.45);
+  text-align: center;
+  margin-top: 4px;
 }
 </style>
 </head>
@@ -211,8 +244,14 @@ body { display:flex; flex-direction:column; align-items:center; min-height:100vh
   </div>
 
   <div class="bottom">
-    <div class="bottom-accent"></div>
-    <div class="cta">→ プロフィールリンクから詳細を見る</div>
+    <a class="cta-button" href="https://mitsurumukaihata.github.io/foo-work/" target="_blank" rel="noopener">
+      <div class="cta-button-text">
+        <span class="cta-button-label">Tap to see more</span>
+        <span class="cta-button-main">採用ページを見る</span>
+      </div>
+      <span class="cta-button-arrow">→</span>
+    </a>
+    <div class="cta-sub">プロフィールリンクからも飛べます</div>
   </div>
 </div>
 
