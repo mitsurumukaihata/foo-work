@@ -32,26 +32,24 @@ body { display:flex; flex-direction:column; align-items:center; min-height:100vh
   width: 1080px;
   height: 1920px;
   color: #fff;
-  padding: 120px 90px;
+  padding: 110px 90px;
   position: relative;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   box-shadow: 0 24px 80px rgba(0,0,0,0.5);
-  /* 背景画像 + ネイビーグラデオーバーレイ (実写の作業風景に合わせて調整) */
+  /* 背景画像 + ネイビーグラデオーバーレイ */
   background:
     linear-gradient(105deg,
-      rgba(13,31,60,0.92) 0%,
-      rgba(13,31,60,0.82) 30%,
-      rgba(13,31,60,0.55) 55%,
-      rgba(13,31,60,0.30) 78%,
-      rgba(13,31,60,0.15) 100%
+      rgba(13,31,60,0.93) 0%,
+      rgba(13,31,60,0.86) 32%,
+      rgba(13,31,60,0.62) 58%,
+      rgba(13,31,60,0.35) 80%,
+      rgba(13,31,60,0.18) 100%
     ),
     url('images/ig-recruit.jpg') no-repeat center center / cover;
-  background-color: #0d1f3c; /* 画像読込前のフォールバック */
+  background-color: #0d1f3c;
 }
-/* 微妙なオレンジ光 (温かみ) */
 .frame::after {
   content: '';
   position: absolute;
@@ -60,32 +58,115 @@ body { display:flex; flex-direction:column; align-items:center; min-height:100vh
   pointer-events: none;
 }
 
-.accent-top { position:absolute; top:80px; left:90px; width:96px; height:4px; background:#e8600a; }
+.accent-top { position:absolute; top:80px; left:90px; width:88px; height:3px; background:#e8600a; }
 
-.top { display:flex; flex-direction:column; gap:30px; margin-top:50px; position:relative; z-index:1; }
-.brand { font-family:'Bebas Neue', sans-serif; font-size:46px; letter-spacing:0.14em; color:rgba(255,255,255,0.92); }
+/* ── 上部 ── */
+.top { position:relative; z-index:1; }
+.brand { font-family:'Bebas Neue', sans-serif; font-size:44px; letter-spacing:0.16em; color:rgba(255,255,255,0.95); margin-top:36px; }
 .brand span { color:#e8600a; }
-.eyebrow { font-size:28px; letter-spacing:0.32em; color:rgba(255,255,255,0.55); text-transform:uppercase; font-weight:500; }
+.eyebrow { font-size:24px; letter-spacing:0.34em; color:rgba(255,255,255,0.55); text-transform:uppercase; font-weight:500; margin-top:18px; }
 
-.main { flex:1; display:flex; flex-direction:column; justify-content:center; margin:50px 0; position:relative; z-index:1; max-width:640px; }
-.main h1 {
-  font-size:84px;
-  font-weight:700;
-  line-height:1.55;
-  margin:0 0 14px 0;
-  letter-spacing:-0.02em;
-  text-shadow: 0 2px 18px rgba(0,0,0,0.4);
+/* ── メイン文 ── */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 40px 0;
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
 }
-.main h1:last-of-type { margin-bottom:0; }
-.divider { margin:60px 0 50px; font-size:50px; color:#f5a05a; font-weight:500; line-height:1.4; text-shadow: 0 2px 12px rgba(0,0,0,0.4); }
+.statement {
+  margin-bottom: 38px;
+}
+.statement:last-of-type {
+  margin-bottom: 0;
+}
+.statement-key {
+  font-size: 44px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: rgba(255,255,255,0.78);
+  letter-spacing: 0.01em;
+  margin-bottom: 6px;
+  text-shadow: 0 2px 14px rgba(0,0,0,0.5);
+}
+.statement-val {
+  font-size: 76px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  text-shadow: 0 2px 18px rgba(0,0,0,0.45);
+}
 
-.job-info { font-size:46px; line-height:1.7; font-weight:500; color:rgba(255,255,255,0.95); text-shadow: 0 2px 12px rgba(0,0,0,0.4); }
-.job-info .salary { display:block; font-family:'Bebas Neue', sans-serif; font-size:72px; letter-spacing:0.04em; color:#f5a05a; line-height:1.1; margin-top:18px; text-shadow: 0 2px 18px rgba(0,0,0,0.5); }
-.job-info .meta { display:block; font-size:32px; color:rgba(255,255,255,0.65); margin-top:8px; letter-spacing:0.04em; }
+.divider {
+  margin: 60px 0 50px;
+  font-size: 38px;
+  color: #f5a05a;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.45);
+}
 
-.bottom { display:flex; flex-direction:column; gap:18px; padding-bottom:20px; position:relative; z-index:1; }
-.bottom-accent { width:60px; height:3px; background:#e8600a; }
-.cta { font-size:40px; color:rgba(255,255,255,0.7); font-weight:500; letter-spacing:0.04em; text-shadow: 0 2px 12px rgba(0,0,0,0.4); }
+.job-info {
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255,255,255,0.15);
+}
+.job-info .role {
+  font-size: 32px;
+  line-height: 1.45;
+  font-weight: 500;
+  color: rgba(255,255,255,0.85);
+  letter-spacing: 0.01em;
+  margin-bottom: 14px;
+}
+.job-info .salary-label {
+  font-size: 20px;
+  letter-spacing: 0.26em;
+  color: rgba(255,255,255,0.55);
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+.job-info .salary {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 88px;
+  letter-spacing: 0.04em;
+  color: #f5a05a;
+  line-height: 1.05;
+  text-shadow: 0 2px 22px rgba(0,0,0,0.5);
+  margin-bottom: 12px;
+}
+.job-info .meta {
+  font-size: 26px;
+  color: rgba(255,255,255,0.65);
+  letter-spacing: 0.04em;
+  line-height: 1.6;
+}
+
+/* ── 下部 ── */
+.bottom {
+  margin-top: 36px;
+  padding-bottom: 8px;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.bottom-accent { width: 56px; height: 3px; background:#e8600a; }
+.cta {
+  font-size: 32px;
+  color: rgba(255,255,255,0.78);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.45);
+}
 </style>
 </head>
 <body>
@@ -93,7 +174,6 @@ body { display:flex; flex-direction:column; align-items:center; min-height:100vh
 <div class="tip">
   <strong>IGストーリー プレビュー</strong>　1080 × 1920 (9:16)<br>
   <small>
-    ※ <code>images/ig-gym.jpg</code> に画像が保存されていれば背景に表示されます<br>
     ・PCでフルサイズ保存：Chrome <code>F12</code> → 要素検証で <code>.frame</code> を選択 → 右クリック → <strong>「ノードのスクリーンショットをキャプチャ」</strong><br>
     ・もしくは：このフレーム部分をスクショして9:16にトリミング → そのままIGストーリーへ
   </small>
@@ -108,15 +188,26 @@ body { display:flex; flex-direction:column; align-items:center; min-height:100vh
   </div>
 
   <div class="main">
-    <h1>ジム代、会社負担。</h1>
-    <h1>有給は、時間単位でOK。</h1>
-    <h1>資格は、会社が取らせる。</h1>
-    <div class="divider">———— そんなタイヤ屋。</div>
-    <div class="job-info">
-      出張サービス・正社員 / 志和拠点
-      <span class="salary">月給 ¥270,000〜¥370,000</span>
-      <span class="meta">賞与 年2回 / 年間休日 105日</span>
+    <div class="statement">
+      <div class="statement-key">ジム代、</div>
+      <div class="statement-val">会社負担。</div>
     </div>
+    <div class="statement">
+      <div class="statement-key">有給は、</div>
+      <div class="statement-val">時間単位でOK。</div>
+    </div>
+    <div class="statement">
+      <div class="statement-key">資格は、</div>
+      <div class="statement-val">会社が取らせる。</div>
+    </div>
+    <div class="divider">— そんなタイヤ屋。</div>
+  </div>
+
+  <div class="job-info">
+    <div class="role">出張タイヤ交換サービススタッフ<br>正社員 / 志和拠点</div>
+    <div class="salary-label">Monthly</div>
+    <div class="salary">¥270,000 〜 ¥370,000</div>
+    <div class="meta">賞与 年2回 / 年間休日 105日</div>
   </div>
 
   <div class="bottom">
