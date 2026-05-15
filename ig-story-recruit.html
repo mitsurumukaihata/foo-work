@@ -160,17 +160,10 @@ body { display:flex; flex-direction:column; align-items:center; min-height:100vh
   gap: 18px;
 }
 .cta-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
+  display: block;
   background: #e8600a;
-  color: #fff;
-  padding: 28px 44px;
-  font-size: 38px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
   text-decoration: none;
+  min-height: 130px;
   box-shadow: 0 12px 32px rgba(232, 96, 10, 0.42), 0 4px 12px rgba(0,0,0,0.3);
   align-self: stretch;
   position: relative;
@@ -244,13 +237,7 @@ body { display:flex; flex-direction:column; align-items:center; min-height:100vh
   </div>
 
   <div class="bottom">
-    <a class="cta-button" href="https://mitsurumukaihata.github.io/foo-work/" target="_blank" rel="noopener">
-      <div class="cta-button-text">
-        <span class="cta-button-label">Tap to see more</span>
-        <span class="cta-button-main">採用ページを見る</span>
-      </div>
-      <span class="cta-button-arrow">→</span>
-    </a>
+    <a class="cta-button" href="https://mitsurumukaihata.github.io/foo-work/" target="_blank" rel="noopener" aria-label="採用ページを開く"></a>
     <div class="cta-sub">プロフィールリンクからも飛べます</div>
   </div>
 </div>
