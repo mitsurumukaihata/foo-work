@@ -31,44 +31,61 @@ body { display:flex; flex-direction:column; align-items:center; min-height:100vh
 .frame {
   width: 1080px;
   height: 1920px;
-  background: #0d1f3c;
   color: #fff;
-  padding: 130px 100px;
+  padding: 120px 90px;
   position: relative;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+  /* 背景画像 + ネイビーグラデオーバーレイ */
+  background:
+    linear-gradient(95deg,
+      rgba(13,31,60,0.95) 0%,
+      rgba(13,31,60,0.88) 28%,
+      rgba(13,31,60,0.60) 50%,
+      rgba(13,31,60,0.30) 72%,
+      rgba(13,31,60,0.10) 100%
+    ),
+    url('images/ig-gym.jpg') no-repeat right center / cover;
+  background-color: #0d1f3c; /* 画像読込前のフォールバック */
 }
 /* 微妙なノイズ感（ベタっと感を防ぐ） */
 .frame::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at top right, rgba(232,96,10,0.08) 0%, transparent 55%);
+  background: radial-gradient(ellipse at top left, rgba(232,96,10,0.10) 0%, transparent 50%);
   pointer-events: none;
 }
 
-.accent-top { position:absolute; top:80px; left:100px; width:96px; height:4px; background:#e8600a; }
+.accent-top { position:absolute; top:80px; left:90px; width:96px; height:4px; background:#e8600a; }
 
 .top { display:flex; flex-direction:column; gap:30px; margin-top:50px; position:relative; z-index:1; }
 .brand { font-family:'Bebas Neue', sans-serif; font-size:46px; letter-spacing:0.14em; color:rgba(255,255,255,0.92); }
 .brand span { color:#e8600a; }
-.eyebrow { font-size:28px; letter-spacing:0.32em; color:rgba(255,255,255,0.45); text-transform:uppercase; font-weight:500; }
+.eyebrow { font-size:28px; letter-spacing:0.32em; color:rgba(255,255,255,0.55); text-transform:uppercase; font-weight:500; }
 
-.main { flex:1; display:flex; flex-direction:column; justify-content:center; margin:50px 0; position:relative; z-index:1; }
-.main h1 { font-size:90px; font-weight:700; line-height:1.55; margin:0 0 14px 0; letter-spacing:-0.02em; }
+.main { flex:1; display:flex; flex-direction:column; justify-content:center; margin:50px 0; position:relative; z-index:1; max-width:640px; }
+.main h1 {
+  font-size:84px;
+  font-weight:700;
+  line-height:1.55;
+  margin:0 0 14px 0;
+  letter-spacing:-0.02em;
+  text-shadow: 0 2px 18px rgba(0,0,0,0.4);
+}
 .main h1:last-of-type { margin-bottom:0; }
-.divider { margin:68px 0 56px; font-size:54px; color:#f5a05a; font-weight:500; line-height:1.4; }
+.divider { margin:60px 0 50px; font-size:50px; color:#f5a05a; font-weight:500; line-height:1.4; text-shadow: 0 2px 12px rgba(0,0,0,0.4); }
 
-.job-info { font-size:50px; line-height:1.7; font-weight:500; color:rgba(255,255,255,0.92); }
-.job-info .salary { display:block; font-family:'Bebas Neue', sans-serif; font-size:78px; letter-spacing:0.04em; color:#f5a05a; line-height:1.1; margin-top:18px; }
-.job-info .meta { display:block; font-size:36px; color:rgba(255,255,255,0.55); margin-top:8px; letter-spacing:0.04em; }
+.job-info { font-size:46px; line-height:1.7; font-weight:500; color:rgba(255,255,255,0.95); text-shadow: 0 2px 12px rgba(0,0,0,0.4); }
+.job-info .salary { display:block; font-family:'Bebas Neue', sans-serif; font-size:72px; letter-spacing:0.04em; color:#f5a05a; line-height:1.1; margin-top:18px; text-shadow: 0 2px 18px rgba(0,0,0,0.5); }
+.job-info .meta { display:block; font-size:32px; color:rgba(255,255,255,0.65); margin-top:8px; letter-spacing:0.04em; }
 
-.bottom { display:flex; flex-direction:column; gap:20px; padding-bottom:24px; position:relative; z-index:1; }
+.bottom { display:flex; flex-direction:column; gap:18px; padding-bottom:20px; position:relative; z-index:1; }
 .bottom-accent { width:60px; height:3px; background:#e8600a; }
-.cta { font-size:42px; color:rgba(255,255,255,0.58); font-weight:500; letter-spacing:0.04em; }
+.cta { font-size:40px; color:rgba(255,255,255,0.7); font-weight:500; letter-spacing:0.04em; text-shadow: 0 2px 12px rgba(0,0,0,0.4); }
 </style>
 </head>
 <body>
@@ -76,9 +93,9 @@ body { display:flex; flex-direction:column; align-items:center; min-height:100vh
 <div class="tip">
   <strong>IGストーリー プレビュー</strong>　1080 × 1920 (9:16)<br>
   <small>
-    ・PCでフルサイズ保存：Chrome <code>F12</code> → 右上「⋮」→ <strong>「ノードのスクリーンショットをキャプチャ」</strong>を<code>.frame</code>要素で実行<br>
-    ・もしくは：このフレーム部分をスクショして9:16にトリミング → そのままIGストーリーへアップ<br>
-    ・スマホで開いてる場合：スクショ → IGストーリー編集で9:16にトリミング
+    ※ <code>images/ig-gym.jpg</code> に画像が保存されていれば背景に表示されます<br>
+    ・PCでフルサイズ保存：Chrome <code>F12</code> → 要素検証で <code>.frame</code> を選択 → 右クリック → <strong>「ノードのスクリーンショットをキャプチャ」</strong><br>
+    ・もしくは：このフレーム部分をスクショして9:16にトリミング → そのままIGストーリーへ
   </small>
 </div>
 
