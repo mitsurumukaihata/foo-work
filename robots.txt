@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://recruit.tiremanager-foo.com/sitemap.xml
