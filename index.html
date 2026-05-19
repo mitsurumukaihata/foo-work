@@ -813,16 +813,16 @@ footer { background: #07101e; padding: 36px 40px; display: flex; justify-content
     <div data-mask><h2 class="sec-title">日々の様子、<br><span class="hl">動画で更新中。</span></h2></div>
     <p class="ig-intro" data-anim data-d="2">タイヤ交換の現場、社長による会社・タイヤの紹介、日々の風景。週3回ペースで動画を更新しています。応募する前に「ここの空気感」を覗いてみてください。</p>
 
-    <!-- LightWidget Embed -->
-    <div class="ig-widget" data-anim data-d="3">
+    <!-- LightWidget Embed (Pro有効化までは display:none で非表示) -->
+    <div class="ig-widget" data-anim data-d="3" style="display:none;">
       <script src="https://cdn.lightwidget.com/widgets/lightwidget.js"></script>
       <iframe src="//lightwidget.com/widgets/c084688ea9f75410b6d6088c664749ae.html"
               scrolling="no" allowtransparency="true"
               class="lightwidget-widget"
               style="width:100%;border:0;overflow:hidden;"></iframe>
     </div>
-    <!-- フォールバック: LightWidget が読み込めない場合に表示するIGカード (現状は念のため非表示) -->
-    <a class="ig-card" href="https://www.instagram.com/tiremanager_f.o.o/" target="_blank" rel="noopener" style="display:none;" data-anim data-d="3">
+    <!-- IGプロフィールカード (LightWidget Pro 有効化されるまでの暫定表示) -->
+    <a class="ig-card" href="https://www.instagram.com/tiremanager_f.o.o/" target="_blank" rel="noopener" data-anim data-d="3">
       <div class="ig-card-top">
         <div class="ig-card-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
