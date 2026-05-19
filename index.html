@@ -488,40 +488,67 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 /* INSTAGRAM */
 .instagram { background: var(--white); }
 .ig-intro { font-size: 16px; line-height: 1.95; color: var(--gray-text); max-width: 640px; margin-bottom: 48px; }
-.ig-widget {
-  margin: 0 0 40px;
-  min-height: 480px;
-  background: var(--cream);
+
+/* IGプロフィールプレビューカード (LightWidget設定前の暫定) */
+.ig-card {
+  display: block;
+  background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  color: #fff;
+  text-decoration: none;
+  padding: 56px 48px 48px;
   position: relative;
-  border: 1px solid var(--gray-light);
+  overflow: hidden;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 6px 24px rgba(220,39,67,0.18);
 }
-.ig-widget iframe { width: 100%; border: 0; display: block; }
-.ig-widget-placeholder {
-  padding: 80px 40px;
-  text-align: center;
-  color: var(--gray-text);
-  font-size: 13px;
-  line-height: 1.9;
-  background:
-    repeating-linear-gradient(45deg, transparent 0 12px, rgba(13,31,60,0.025) 12px 24px);
+.ig-card:hover { transform: translateY(-3px); box-shadow: 0 12px 36px rgba(220,39,67,0.32); }
+.ig-card::before {
+  content: '';
+  position: absolute;
+  top: -20%; right: -10%;
+  width: 60%; height: 80%;
+  background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 60%);
+  pointer-events: none;
 }
-.ig-widget-placeholder strong { color: var(--navy); display: block; font-size: 15px; margin-bottom: 10px; letter-spacing: 0.04em; }
-.ig-widget-placeholder small { display: block; margin-top: 12px; font-size: 11px; opacity: 0.7; line-height: 1.8; }
-.ig-cta-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.ig-card-top { display: flex; justify-content: space-between; align-items: flex-start; position: relative; z-index: 1; }
+.ig-card-icon { width: 56px; height: 56px; }
+.ig-card-icon svg { width: 100%; height: 100%; color: rgba(255,255,255,0.95); }
+.ig-card-label { font-size: 11px; letter-spacing: 0.3em; opacity: 0.75; text-transform: uppercase; padding-top: 8px; }
+.ig-card-mid { position: relative; z-index: 1; margin: 40px 0; }
+.ig-card-handle { font-family: 'Bebas Neue', sans-serif; font-size: clamp(38px,5vw,56px); letter-spacing: 0.04em; line-height: 1; margin-bottom: 16px; }
+.ig-card-tagline { font-size: 15px; line-height: 1.85; opacity: 0.94; max-width: 480px; }
+.ig-card-bottom { display: flex; justify-content: space-between; align-items: center; gap: 16px; position: relative; z-index: 1; flex-wrap: wrap; }
+.ig-card-meta { display: inline-flex; align-items: center; gap: 10px; font-size: 12px; letter-spacing: 0.1em; opacity: 0.85; }
+.ig-card-meta::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: #fff; box-shadow: 0 0 12px rgba(255,255,255,0.6); animation: ig-pulse 1.8s infinite; }
+@keyframes ig-pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.5; transform:scale(1.4); } }
+.ig-card-cta {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 14px; font-weight: 500; letter-spacing: 0.06em;
+  background: rgba(255,255,255,0.18); padding: 12px 22px;
+  backdrop-filter: blur(4px);
+}
+
+.ig-cta-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 32px; }
 .ig-follow-btn {
   display: inline-flex; align-items: center; gap: 16px;
-  padding: 18px 32px; background: var(--navy); color: var(--white);
+  padding: 16px 28px; background: var(--navy); color: var(--white);
   text-decoration: none; letter-spacing: 0.06em;
   transition: background 0.2s, transform 0.2s;
   border: 0;
 }
 .ig-follow-btn:hover { background: var(--orange); transform: translateY(-2px); }
-.ig-follow-handle { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.08em; color: var(--orange-light); }
-.ig-follow-text { font-size: 14px; font-weight: 500; }
+.ig-follow-handle { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 0.08em; color: var(--orange-light); }
+.ig-follow-text { font-size: 13px; font-weight: 500; }
 .ig-cta-note { font-size: 12px; color: var(--gray-text); letter-spacing: 0.03em; }
 
 @media (max-width: 700px) {
-  .ig-widget { min-height: 600px; }
+  .ig-card { padding: 40px 28px 32px; min-height: 360px; }
+  .ig-card-handle { font-size: clamp(32px,8vw,42px); }
+  .ig-card-tagline { font-size: 13px; }
   .ig-cta-row { flex-direction: column; align-items: stretch; gap: 12px; }
   .ig-follow-btn { justify-content: center; padding: 14px 22px; }
   .ig-cta-note { text-align: center; }
@@ -782,22 +809,24 @@ footer { background: #07101e; padding: 36px 40px; display: flex; justify-content
     <div data-mask><h2 class="sec-title">日々の様子、<br><span class="hl">動画で更新中。</span></h2></div>
     <p class="ig-intro" data-anim data-d="2">タイヤ交換の現場、社長による会社・タイヤの紹介、日々の風景。週3回ペースで動画を更新しています。応募する前に「ここの空気感」を覗いてみてください。</p>
 
-    <!-- LightWidget Embed (リール優先・PC 3列 / モバイル 2列) -->
-    <div class="ig-widget" data-anim data-d="3">
-      <!-- TODO: LightWidget で widget を作成したら、下のURLの XXXXX を取得したハッシュに差し替える -->
-      <!-- 例: //cdn.lightwidget.com/widgets/AbCdEf12345.html -->
-      <iframe src="//cdn.lightwidget.com/widgets/REPLACE_ME.html"
-              scrolling="no" allowtransparency="true"
-              class="lightwidget-widget"
-              style="width:100%;border:0;overflow:hidden;display:none;"
-              loading="lazy"></iframe>
-      <div class="ig-widget-placeholder">
-        <strong>Instagram グリッドの埋め込み準備中</strong>
-        LightWidget で widget を作成してください（lightwidget.com → サインアップ → Instagram連携）。<br>
-        取得したハッシュをこの HTML 内 `REPLACE_ME` に貼ると、最新6投稿がここに自動表示されます。
-        <small>(設定後、上の iframe の display:none を削除すると有効化されます)</small>
+    <!-- Instagram プロフィールカード (LightWidget設定後はグリッド埋め込みに差し替え) -->
+    <a class="ig-card" href="https://www.instagram.com/tiremanager_f.o.o/" target="_blank" rel="noopener" data-anim data-d="3">
+      <div class="ig-card-top">
+        <div class="ig-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </div>
+        <div class="ig-card-label">Instagram</div>
       </div>
-    </div>
+      <div class="ig-card-mid">
+        <div class="ig-card-handle">@tiremanager_f.o.o</div>
+        <div class="ig-card-tagline">タイヤ交換の現場・社長による会社&amp;タイヤ紹介・日々の風景。<br>応募する前に「ここの空気感」を覗いてみてください。</div>
+      </div>
+      <div class="ig-card-bottom">
+        <span class="ig-card-meta">週3回 動画更新中</span>
+        <span class="ig-card-cta">プロフィールを見る →</span>
+      </div>
+    </a>
+    <!-- LightWidget 設定後は、上記 .ig-card を <iframe src="//cdn.lightwidget.com/widgets/HASH.html"> に差し替える -->
 
     <div class="ig-cta-row" data-anim data-d="4">
       <a href="https://www.instagram.com/tiremanager_f.o.o/" target="_blank" rel="noopener" class="ig-follow-btn">
