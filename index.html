@@ -489,7 +489,11 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .instagram { background: var(--white); }
 .ig-intro { font-size: 16px; line-height: 1.95; color: var(--gray-text); max-width: 640px; margin-bottom: 48px; }
 
-/* IGプロフィールプレビューカード (LightWidget設定前の暫定) */
+/* LightWidget iframe ラッパ */
+.ig-widget { margin-bottom: 24px; min-height: 600px; }
+.ig-widget iframe { width: 100%; border: 0; display: block; }
+
+/* IGプロフィールプレビューカード (フォールバック・LightWidget読込失敗時用) */
 .ig-card {
   display: block;
   background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
@@ -809,8 +813,16 @@ footer { background: #07101e; padding: 36px 40px; display: flex; justify-content
     <div data-mask><h2 class="sec-title">日々の様子、<br><span class="hl">動画で更新中。</span></h2></div>
     <p class="ig-intro" data-anim data-d="2">タイヤ交換の現場、社長による会社・タイヤの紹介、日々の風景。週3回ペースで動画を更新しています。応募する前に「ここの空気感」を覗いてみてください。</p>
 
-    <!-- Instagram プロフィールカード (LightWidget設定後はグリッド埋め込みに差し替え) -->
-    <a class="ig-card" href="https://www.instagram.com/tiremanager_f.o.o/" target="_blank" rel="noopener" data-anim data-d="3">
+    <!-- LightWidget Embed -->
+    <div class="ig-widget" data-anim data-d="3">
+      <script src="https://cdn.lightwidget.com/widgets/lightwidget.js"></script>
+      <iframe src="//lightwidget.com/widgets/c084688ea9f75410b6d6088c664749ae.html"
+              scrolling="no" allowtransparency="true"
+              class="lightwidget-widget"
+              style="width:100%;border:0;overflow:hidden;"></iframe>
+    </div>
+    <!-- フォールバック: LightWidget が読み込めない場合に表示するIGカード (現状は念のため非表示) -->
+    <a class="ig-card" href="https://www.instagram.com/tiremanager_f.o.o/" target="_blank" rel="noopener" style="display:none;" data-anim data-d="3">
       <div class="ig-card-top">
         <div class="ig-card-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
@@ -826,7 +838,6 @@ footer { background: #07101e; padding: 36px 40px; display: flex; justify-content
         <span class="ig-card-cta">プロフィールを見る →</span>
       </div>
     </a>
-    <!-- LightWidget 設定後は、上記 .ig-card を <iframe src="//cdn.lightwidget.com/widgets/HASH.html"> に差し替える -->
 
     <div class="ig-cta-row" data-anim data-d="4">
       <a href="https://www.instagram.com/tiremanager_f.o.o/" target="_blank" rel="noopener" class="ig-follow-btn">
