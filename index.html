@@ -485,6 +485,48 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
   .cmodal-fact-v { font-size: 14px; }
 }
 
+/* INSTAGRAM */
+.instagram { background: var(--white); }
+.ig-intro { font-size: 16px; line-height: 1.95; color: var(--gray-text); max-width: 640px; margin-bottom: 48px; }
+.ig-widget {
+  margin: 0 0 40px;
+  min-height: 480px;
+  background: var(--cream);
+  position: relative;
+  border: 1px solid var(--gray-light);
+}
+.ig-widget iframe { width: 100%; border: 0; display: block; }
+.ig-widget-placeholder {
+  padding: 80px 40px;
+  text-align: center;
+  color: var(--gray-text);
+  font-size: 13px;
+  line-height: 1.9;
+  background:
+    repeating-linear-gradient(45deg, transparent 0 12px, rgba(13,31,60,0.025) 12px 24px);
+}
+.ig-widget-placeholder strong { color: var(--navy); display: block; font-size: 15px; margin-bottom: 10px; letter-spacing: 0.04em; }
+.ig-widget-placeholder small { display: block; margin-top: 12px; font-size: 11px; opacity: 0.7; line-height: 1.8; }
+.ig-cta-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.ig-follow-btn {
+  display: inline-flex; align-items: center; gap: 16px;
+  padding: 18px 32px; background: var(--navy); color: var(--white);
+  text-decoration: none; letter-spacing: 0.06em;
+  transition: background 0.2s, transform 0.2s;
+  border: 0;
+}
+.ig-follow-btn:hover { background: var(--orange); transform: translateY(-2px); }
+.ig-follow-handle { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.08em; color: var(--orange-light); }
+.ig-follow-text { font-size: 14px; font-weight: 500; }
+.ig-cta-note { font-size: 12px; color: var(--gray-text); letter-spacing: 0.03em; }
+
+@media (max-width: 700px) {
+  .ig-widget { min-height: 600px; }
+  .ig-cta-row { flex-direction: column; align-items: stretch; gap: 12px; }
+  .ig-follow-btn { justify-content: center; padding: 14px 22px; }
+  .ig-cta-note { text-align: center; }
+}
+
 /* MESSAGE */
 .message { background: var(--cream); }
 .msg-inner { display: grid; grid-template-columns: 280px 1fr; gap: 80px; align-items: start; margin-top: 60px; }
@@ -588,6 +630,7 @@ footer { background: #07101e; padding: 36px 40px; display: flex; justify-content
     <li><a href="#career">キャリア</a></li>
     <li><a href="#culture">環境・制度</a></li>
     <li><a href="#recruit">募集要項</a></li>
+    <li><a href="#instagram">Instagram</a></li>
     <li><a href="#message">代表メッセージ</a></li>
     <li><a href="#contact">お問い合わせ</a></li>
   </ul>
@@ -729,6 +772,39 @@ footer { background: #07101e; padding: 36px 40px; display: flex; justify-content
           <span class="card-more">詳しく見る →</span>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec instagram" id="instagram" data-feat>
+  <div class="container">
+    <div class="sec-label" data-anim data-d="1">Latest from Instagram</div>
+    <div data-mask><h2 class="sec-title">日々の様子、<br><span class="hl">動画で更新中。</span></h2></div>
+    <p class="ig-intro" data-anim data-d="2">タイヤ交換の現場、社長による会社・タイヤの紹介、日々の風景。週3回ペースで動画を更新しています。応募する前に「ここの空気感」を覗いてみてください。</p>
+
+    <!-- LightWidget Embed (リール優先・PC 3列 / モバイル 2列) -->
+    <div class="ig-widget" data-anim data-d="3">
+      <!-- TODO: LightWidget で widget を作成したら、下のURLの XXXXX を取得したハッシュに差し替える -->
+      <!-- 例: //cdn.lightwidget.com/widgets/AbCdEf12345.html -->
+      <iframe src="//cdn.lightwidget.com/widgets/REPLACE_ME.html"
+              scrolling="no" allowtransparency="true"
+              class="lightwidget-widget"
+              style="width:100%;border:0;overflow:hidden;display:none;"
+              loading="lazy"></iframe>
+      <div class="ig-widget-placeholder">
+        <strong>Instagram グリッドの埋め込み準備中</strong>
+        LightWidget で widget を作成してください（lightwidget.com → サインアップ → Instagram連携）。<br>
+        取得したハッシュをこの HTML 内 `REPLACE_ME` に貼ると、最新6投稿がここに自動表示されます。
+        <small>(設定後、上の iframe の display:none を削除すると有効化されます)</small>
+      </div>
+    </div>
+
+    <div class="ig-cta-row" data-anim data-d="4">
+      <a href="https://www.instagram.com/tiremanager_f.o.o/" target="_blank" rel="noopener" class="ig-follow-btn">
+        <span class="ig-follow-handle">@tiremanager_f.o.o</span>
+        <span class="ig-follow-text">フォローする →</span>
+      </a>
+      <span class="ig-cta-note">週3回ペースで動画更新中</span>
     </div>
   </div>
 </section>
