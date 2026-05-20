@@ -489,10 +489,6 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .instagram { background: var(--white); }
 .ig-intro { font-size: 16px; line-height: 1.95; color: var(--gray-text); max-width: 640px; margin-bottom: 48px; }
 
-/* LightWidget iframe ラッパ */
-.ig-widget { margin-bottom: 24px; min-height: 600px; }
-.ig-widget iframe { width: 100%; border: 0; display: block; }
-
 /* IGプロフィールプレビューカード (Instagramのプロフィール風UI) */
 .ig-card {
   display: block;
@@ -558,14 +554,55 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 /* バイオ */
 .ig-bio { font-size: 13px; line-height: 1.8; opacity: 0.94; max-width: 600px; position: relative; z-index: 1; margin-bottom: 22px; }
 
-/* モック投稿グリッド (LightWidget Pro有効化までのプレースホルダ) */
+/* 投稿グリッド (Instagram Graph API から実投稿を表示) */
 .ig-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 4px;
+  gap: 6px;
   margin-bottom: 24px;
   position: relative; z-index: 1;
 }
+@media (max-width: 600px) {
+  .ig-grid { grid-template-columns: repeat(2, 1fr); }
+}
+.ig-post {
+  aspect-ratio: 1;
+  position: relative;
+  overflow: hidden;
+  background: rgba(255,255,255,0.10);
+  display: block;
+  text-decoration: none;
+  transition: transform 0.18s;
+}
+.ig-post:hover { transform: scale(1.03); z-index: 2; }
+.ig-post img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.ig-post .ig-overlay {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,0); display: flex; align-items: center; justify-content: center;
+  color: #fff; opacity: 0; transition: opacity 0.18s, background 0.18s;
+}
+.ig-post:hover .ig-overlay { opacity: 1; background: rgba(0,0,0,0.35); }
+.ig-post .ig-overlay svg { width: 28px; height: 28px; }
+.ig-post .ig-play {
+  position: absolute; top: 6px; right: 6px;
+  width: 22px; height: 22px;
+  color: #fff;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.6));
+  pointer-events: none;
+}
+.ig-post .ig-play svg { width: 100%; height: 100%; }
+.ig-post.skel {
+  background: linear-gradient(90deg, rgba(255,255,255,0.08) 25%, rgba(255,255,255,0.18) 50%, rgba(255,255,255,0.08) 75%);
+  background-size: 200% 100%;
+  animation: igSkel 1.4s linear infinite;
+}
+@keyframes igSkel { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+/* 旧モック thumb (廃止予定だが既存style参照のため残す) */
 .ig-thumb {
   aspect-ratio: 1;
   background: rgba(255,255,255,0.10);
@@ -871,21 +908,13 @@ footer { background: #07101e; padding: 36px 40px; display: flex; justify-content
     <div data-mask><h2 class="sec-title">日々の様子、<br><span class="hl">動画で更新中。</span></h2></div>
     <p class="ig-intro" data-anim data-d="2">タイヤ交換の現場、社長による会社・タイヤの紹介、日々の風景。週3回ペースで動画を更新しています。応募する前に「ここの空気感」を覗いてみてください。</p>
 
-    <!-- LightWidget Embed (Pro有効化までは display:none で非表示) -->
-    <div class="ig-widget" data-anim data-d="3" style="display:none;">
-      <script src="https://cdn.lightwidget.com/widgets/lightwidget.js"></script>
-      <iframe src="//lightwidget.com/widgets/c084688ea9f75410b6d6088c664749ae.html"
-              scrolling="no" allowtransparency="true"
-              class="lightwidget-widget"
-              style="width:100%;border:0;overflow:hidden;"></iframe>
-    </div>
-    <!-- IGプロフィールカード (LightWidget Pro 有効化されるまでの暫定表示) -->
-    <a class="ig-card" href="https://www.instagram.com/tiremanager_f.o.o/" target="_blank" rel="noopener" data-anim data-d="3">
-      <!-- ヘッダ: アバター + ユーザー名 + IGロゴ -->
-      <div class="ig-card-header">
+    <!-- IGプロフィールカード + 実投稿グリッド (Instagram Graph API 経由で自動取得) -->
+    <div class="ig-card" data-anim data-d="3">
+      <!-- ヘッダ: アバター + ユーザー名 + IGロゴ → クリックで Instagram プロフィール -->
+      <a href="https://www.instagram.com/tiremanager_f.o.o/" target="_blank" rel="noopener" class="ig-card-header" style="text-decoration:none;color:inherit;">
         <div class="ig-profile">
           <div class="ig-profile-ring">
-            <div class="ig-profile-avatar">
+            <div class="ig-profile-avatar" id="ig-avatar">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v2"/></svg>
             </div>
           </div>
@@ -897,34 +926,34 @@ footer { background: #07101e; padding: 36px 40px; display: flex; justify-content
         <div class="ig-card-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
         </div>
-      </div>
+      </a>
 
-      <!-- 統計 -->
+      <!-- 統計 (動的に更新) -->
       <div class="ig-stats">
-        <div class="ig-stat"><strong>55</strong><span>投稿</span></div>
-        <div class="ig-stat"><strong>56</strong><span>フォロワー</span></div>
-        <div class="ig-stat"><strong>24</strong><span>フォロー中</span></div>
+        <div class="ig-stat"><strong id="ig-stat-media">-</strong><span>投稿</span></div>
+        <div class="ig-stat"><strong id="ig-stat-followers">-</strong><span>フォロワー</span></div>
+        <div class="ig-stat"><strong id="ig-stat-follows">-</strong><span>フォロー中</span></div>
       </div>
 
       <!-- バイオ -->
       <div class="ig-bio">タイヤ交換の現場・社長による会社&amp;タイヤ紹介・日々の風景。応募する前に「ここの空気感」を覗いてみてください。</div>
 
-      <!-- モック投稿グリッド -->
-      <div class="ig-grid">
-        <div class="ig-thumb"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="8 5 19 12 8 19"/></svg></div>
-        <div class="ig-thumb"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="8 5 19 12 8 19"/></svg></div>
-        <div class="ig-thumb"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="8 5 19 12 8 19"/></svg></div>
-        <div class="ig-thumb"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="8 5 19 12 8 19"/></svg></div>
-        <div class="ig-thumb"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="8 5 19 12 8 19"/></svg></div>
-        <div class="ig-thumb"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="8 5 19 12 8 19"/></svg></div>
+      <!-- 実投稿グリッド (Worker から最新6件を取得) -->
+      <div class="ig-grid" id="ig-grid">
+        <div class="ig-post skel"></div>
+        <div class="ig-post skel"></div>
+        <div class="ig-post skel"></div>
+        <div class="ig-post skel"></div>
+        <div class="ig-post skel"></div>
+        <div class="ig-post skel"></div>
       </div>
 
       <!-- 下部: 更新中 + CTA -->
-      <div class="ig-card-bottom">
+      <a class="ig-card-bottom" href="https://www.instagram.com/tiremanager_f.o.o/" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">
         <span class="ig-card-meta">週3回 動画更新中</span>
         <span class="ig-card-cta">プロフィールを見る →</span>
-      </div>
-    </a>
+      </a>
+    </div>
 
     <div class="ig-cta-row" data-anim data-d="4">
       <a href="https://www.instagram.com/tiremanager_f.o.o/" target="_blank" rel="noopener" class="ig-follow-btn">
@@ -1485,6 +1514,49 @@ function setupSwipeClose(modalBgEl, closeFunc, scrollerSelector) {
 // 両モーダルにスワイプダウンクローズを適用
 setupSwipeClose(document.getElementById('culture-modal'), closeCultureModal, '.cmodal');
 setupSwipeClose(document.getElementById('recruit-modal'), closeRecruitForm, '.rmodal');
+
+// ─── Instagram フィード自動取得 (foo-portal Worker 経由、永久無料) ───
+(async function loadIG(){
+  var PROXY = 'https://notion-proxy.33322666666mm.workers.dev';
+  try {
+    var responses = await Promise.all([
+      fetch(PROXY + '/ig/insights?type=account').then(function(r){return r.json();}),
+      fetch(PROXY + '/ig/insights?type=media&limit=6').then(function(r){return r.json();})
+    ]);
+    var acc = responses[0], med = responses[1];
+    // 統計
+    if (acc && acc.ok && acc.profile) {
+      var p = acc.profile;
+      var setN = function(id, v){ var el = document.getElementById(id); if(el) el.textContent = (v||0).toLocaleString(); };
+      setN('ig-stat-media', p.media_count);
+      setN('ig-stat-followers', p.followers_count);
+      setN('ig-stat-follows', p.follows_count);
+      if (p.profile_picture_url) {
+        var av = document.getElementById('ig-avatar');
+        if (av) av.innerHTML = '<img src="' + p.profile_picture_url + '" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover;">';
+      }
+    }
+    // 投稿グリッド
+    if (med && med.ok && med.media && med.media.length) {
+      var grid = document.getElementById('ig-grid');
+      grid.innerHTML = med.media.slice(0, 6).map(function(m){
+        var img = m.thumbnail_url || m.media_url || '';
+        var isVideo = m.media_type === 'VIDEO' || m.media_product_type === 'REELS';
+        var playIcon = isVideo
+          ? '<span class="ig-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="8 5 19 12 8 19"/></svg></span>'
+          : '';
+        return '<a href="' + m.permalink + '" target="_blank" rel="noopener" class="ig-post">'
+          + (img ? '<img src="' + img + '" alt="" loading="lazy">' : '')
+          + playIcon
+          + '<span class="ig-overlay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/><\/svg></span>'
+          + '</a>';
+      }).join('');
+    }
+  } catch(e) {
+    // 失敗時はスケルトンのまま消えない。プロフィールカード自体は表示される
+    console.warn('IG feed load failed:', e);
+  }
+})();
 </script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "9bb1732a0c31412186bfd8b17835c5a2"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
