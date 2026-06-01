@@ -608,21 +608,18 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 }
 @keyframes igSkel { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
-/* 旧モック thumb (廃止予定だが既存style参照のため残す) */
-.ig-thumb {
-  aspect-ratio: 1;
+/* IG読込失敗時のフォールバック (skeletonが残らないようにする) */
+.ig-grid.ig-grid-fallback { display: block; grid-template-columns: none; gap: 0; }
+.ig-fallback-cta {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+  padding: 48px 20px; text-decoration: none; color: #fff; text-align: center;
   background: rgba(255,255,255,0.10);
-  display: flex; align-items: center; justify-content: center;
-  color: rgba(255,255,255,0.55);
-  position: relative;
+  transition: background 0.18s;
 }
-.ig-thumb svg { width: 28px; height: 28px; opacity: 0.6; }
-.ig-thumb::after {
-  content: '';
-  position: absolute; top: 6px; right: 6px;
-  width: 12px; height: 12px;
-  background: no-repeat center/contain url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white' opacity='0.7'><polygon points='6 4 20 12 6 20'/></svg>");
-}
+.ig-fallback-cta:hover { background: rgba(255,255,255,0.16); }
+.ig-fallback-cta svg { width: 40px; height: 40px; opacity: 0.92; }
+.ig-fallback-msg { font-size: 13px; opacity: 0.9; line-height: 1.7; }
+.ig-fallback-go { font-size: 14px; font-weight: 700; letter-spacing: 0.04em; }
 
 /* 下部 (更新中 + CTA) */
 .ig-card-bottom { display: flex; justify-content: space-between; align-items: center; gap: 16px; position: relative; z-index: 1; flex-wrap: wrap; }
@@ -1524,10 +1521,27 @@ setupSwipeClose(document.getElementById('recruit-modal'), closeRecruitForm, '.rm
 // ─── Instagram フィード自動取得 (foo-portal Worker 経由、永久無料) ───
 (async function loadIG(){
   var PROXY = 'https://notion-proxy.33322666666mm.workers.dev';
+  var IG_URL = 'https://www.instagram.com/tiremanager_f.o.o/';
+  // 投稿グリッド読込失敗時: skeletonを残さず、Instagram誘導バナーに置換
+  function igGridFallback(){
+    var grid = document.getElementById('ig-grid');
+    if (!grid) return;
+    grid.classList.add('ig-grid-fallback');
+    grid.innerHTML = '<a href="' + IG_URL + '" target="_blank" rel="noopener" class="ig-fallback-cta">'
+      + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>'
+      + '<span class="ig-fallback-msg">最新の投稿は Instagram でご覧いただけます</span>'
+      + '<span class="ig-fallback-go">@tiremanager_f.o.o を見る →</span>'
+      + '</a>';
+  }
+  // 統計取得失敗時: 「-」を残さず統計バーごと非表示
+  function igStatsFallback(){
+    var stats = document.querySelector('.ig-stats');
+    if (stats) stats.style.display = 'none';
+  }
   try {
     var responses = await Promise.all([
-      fetch(PROXY + '/ig/insights?type=account').then(function(r){return r.json();}),
-      fetch(PROXY + '/ig/insights?type=media&limit=6').then(function(r){return r.json();})
+      fetch(PROXY + '/ig/insights?type=account').then(function(r){return r.json();}).catch(function(){return null;}),
+      fetch(PROXY + '/ig/insights?type=media&limit=6').then(function(r){return r.json();}).catch(function(){return null;})
     ]);
     var acc = responses[0], med = responses[1];
     // 統計
@@ -1541,6 +1555,8 @@ setupSwipeClose(document.getElementById('recruit-modal'), closeRecruitForm, '.rm
         var av = document.getElementById('ig-avatar');
         if (av) av.innerHTML = '<img src="' + p.profile_picture_url + '" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover;">';
       }
+    } else {
+      igStatsFallback();
     }
     // 投稿グリッド
     if (med && med.ok && med.media && med.media.length) {
@@ -1557,10 +1573,14 @@ setupSwipeClose(document.getElementById('recruit-modal'), closeRecruitForm, '.rm
           + '<span class="ig-overlay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/><\/svg></span>'
           + '</a>';
       }).join('');
+    } else {
+      igGridFallback();
     }
   } catch(e) {
-    // 失敗時はスケルトンのまま消えない。プロフィールカード自体は表示される
+    // 想定外エラー時も skeleton を残さずフォールバック表示
     console.warn('IG feed load failed:', e);
+    igStatsFallback();
+    igGridFallback();
   }
 })();
 </script>
