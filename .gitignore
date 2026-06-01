@@ -1,0 +1,9 @@
+# 仮置きの素材（ゆくゆく本番写真に差し替え予定。リポジトリには含めない）
+manga/
+
+# OS / エディタが吐く一時ファイル
+.DS_Store
+Thumbs.db
+desktop.ini
+*~
+.vscode/
