@@ -39,7 +39,7 @@
   "name": "有限会社タイヤマネージャー フー",
   "alternateName": "タイヤマネージャー フー",
   "url": "https://tiremanager-foo.com",
-  "logo": "https://recruit.tiremanager-foo.com/images/feat1/feat1.jpg",
+  "logo": "https://recruit.tiremanager-foo.com/icon-512.png",
   "image": [
     "https://recruit.tiremanager-foo.com/images/feat1/feat1.jpg",
     "https://recruit.tiremanager-foo.com/images/feat2/feat2.jpg",
@@ -71,13 +71,13 @@
     "value": "foo-shucchou-2026"
   },
   "datePosted": "2026-05-18",
-  "validThrough": "2026-12-31T23:59",
+  "validThrough": "2027-12-31T23:59",
   "employmentType": "FULL_TIME",
   "hiringOrganization": {
     "@type": "Organization",
     "name": "有限会社タイヤマネージャー フー",
     "sameAs": "https://tiremanager-foo.com",
-    "logo": "https://recruit.tiremanager-foo.com/images/feat1/feat1.jpg"
+    "logo": "https://recruit.tiremanager-foo.com/icon-512.png"
   },
   "jobLocation": {
     "@type": "Place",
@@ -824,7 +824,7 @@ footer { background: #07101e; padding: 36px 40px; display: flex; justify-content
   </div>
 
   <div class="feat rev" data-feat>
-    <div class="feat-img"><img src="images/feat2/feat2.jpg" alt="作業スタッフ" style="width:100%;height:100%;min-height:460px;object-fit:cover;display:block;"></div>
+    <div class="feat-img"><img src="images/feat2/feat2.jpg" alt="作業スタッフ" loading="lazy" style="width:100%;height:100%;min-height:460px;object-fit:cover;display:block;"></div>
     <div class="feat-text">
       <div class="feat-num">02</div>
       <div class="feat-divider"></div>
@@ -834,7 +834,7 @@ footer { background: #07101e; padding: 36px 40px; display: flex; justify-content
   </div>
 
   <div class="feat" data-feat>
-    <div class="feat-img"><img src="images/feat3/feat3.jpg" alt="出張現場" style="width:100%;height:100%;min-height:460px;object-fit:cover;display:block;"></div>
+    <div class="feat-img"><img src="images/feat3/feat3.jpg" alt="出張現場" loading="lazy" style="width:100%;height:100%;min-height:460px;object-fit:cover;display:block;"></div>
     <div class="feat-text">
       <div class="feat-num">03</div>
       <div class="feat-divider"></div>
@@ -1057,17 +1057,17 @@ footer { background: #07101e; padding: 36px 40px; display: flex; justify-content
     <form id="recruit-form" onsubmit="return submitRecruit(event)">
       <input type="text" name="_hp" class="rmodal-hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
       <div class="rfield">
-        <label>お名前<span class="req">*</span></label>
-        <input type="text" name="name" required maxlength="60" autocomplete="name" />
+        <label for="rf-name">お名前<span class="req">*</span></label>
+        <input id="rf-name" type="text" name="name" required maxlength="60" autocomplete="name" />
       </div>
       <div class="rfield">
-        <label>連絡先（電話 or メール、どちらかでOK）<span class="req">*</span></label>
-        <input type="text" name="contact" required maxlength="200" placeholder="例: 090-1234-5678 / your@example.com" />
+        <label for="rf-contact">連絡先（電話 or メール、どちらかでOK）<span class="req">*</span></label>
+        <input id="rf-contact" type="text" name="contact" required maxlength="200" placeholder="例: 090-1234-5678 / your@example.com" />
       </div>
       <div class="rfield-row">
         <div class="rfield">
-          <label>希望職種<span class="req">*</span></label>
-          <select name="jobPref" required>
+          <label for="rf-jobPref">希望職種<span class="req">*</span></label>
+          <select id="rf-jobPref" name="jobPref" required>
             <option value="">選んでください</option>
             <option>現場作業</option>
             <option>営業</option>
@@ -1076,8 +1076,8 @@ footer { background: #07101e; padding: 36px 40px; display: flex; justify-content
           </select>
         </div>
         <div class="rfield">
-          <label>希望勤務地<span class="req">*</span></label>
-          <select name="sitePref" required>
+          <label for="rf-sitePref">希望勤務地<span class="req">*</span></label>
+          <select id="rf-sitePref" name="sitePref" required>
             <option value="">選んでください</option>
             <option>五日市</option>
             <option>志和</option>
@@ -1087,12 +1087,12 @@ footer { background: #07101e; padding: 36px 40px; display: flex; justify-content
       </div>
       <div class="rfield-row">
         <div class="rfield">
-          <label>年齢（任意）</label>
-          <input type="number" name="age" min="15" max="100" inputmode="numeric" />
+          <label for="rf-age">年齢（任意）</label>
+          <input id="rf-age" type="number" name="age" min="15" max="100" inputmode="numeric" />
         </div>
         <div class="rfield">
-          <label>入社希望時期（任意）</label>
-          <select name="timing">
+          <label for="rf-timing">入社希望時期（任意）</label>
+          <select id="rf-timing" name="timing">
             <option value="">選んでください</option>
             <option>すぐ</option>
             <option>1〜3ヶ月</option>
@@ -1103,16 +1103,16 @@ footer { background: #07101e; padding: 36px 40px; display: flex; justify-content
       </div>
       <div class="rfield-row">
         <div class="rfield">
-          <label>普通自動車免許（任意）</label>
-          <select name="license">
+          <label for="rf-license">普通自動車免許（任意）</label>
+          <select id="rf-license" name="license">
             <option value="">選んでください</option>
             <option>有</option>
             <option>無</option>
           </select>
         </div>
         <div class="rfield">
-          <label>知ったきっかけ（任意）</label>
-          <select name="source">
+          <label for="rf-source">知ったきっかけ（任意）</label>
+          <select id="rf-source" name="source">
             <option value="">選んでください</option>
             <option>紹介</option>
             <option>Web検索</option>
@@ -1123,8 +1123,8 @@ footer { background: #07101e; padding: 36px 40px; display: flex; justify-content
         </div>
       </div>
       <div class="rfield">
-        <label>メッセージ（任意）</label>
-        <textarea name="message" maxlength="2000" placeholder="質問、自己紹介、応募のきっかけなど、自由にどうぞ"></textarea>
+        <label for="rf-message">メッセージ（任意）</label>
+        <textarea id="rf-message" name="message" maxlength="2000" placeholder="質問、自己紹介、応募のきっかけなど、自由にどうぞ"></textarea>
       </div>
       <div id="rmodal-msg" class="rmodal-msg" style="display:none;"></div>
       <div class="rmodal-actions">
